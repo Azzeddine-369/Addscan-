@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>AddiScan — Full Food Additives Directory (726 E-Codes) | Crafted by Azzedine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0F8B7F;
+      --primary-dark: #0A6B61;
+      --primary-light: #E4F4F2;
+      --primary-soft: #C7EBE6;
+      --safe-green: #10B981;
+      --safe-green-dark: #047857;
+      --safe-green-bg: #E8F8F0;
+      --safe-green-border: #A7F3D0;
+      --caution-orange: #F59E0B;
+      --caution-orange-dark: #B45309;
+      --caution-orange-bg: #FFF7ED;
+      --caution-orange-border: #FDE68A;
+      --neutral-grey: #6B7280;
+      --neutral-grey-bg: #F3F4F6;
+      --bg: #F8FAF9;
+      --card-bg: #FFFFFF;
+      --text-main: #1F2937;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --divider: #E5E7EB;
+      --radius-card: 20px;
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --font: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0F1716;
+      --card-bg: #182423;
+      --text-main: #F9FAFB;
+      --text-muted: #9CA3AF;
+      --text-light: #6B7280;
+      --divider: #263836;
+      --primary-light: #16332E;
+      --safe-green-bg: #122921;
+      --safe-green-border: #1E4D3E;
+      --caution-orange-bg: #2E2211;
+      --caution-orange-border: #523916;
+      --neutral-grey-bg: #222E2C;
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    [dir="rtl"] {
+      --font: 'Tajawal', 'Nunito', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Top Global Navigation Bar */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--divider);
+      box-shadow: var(--shadow-soft);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .brand-logo-svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .brand-text h1 {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: var(--neutral-grey-bg);
+      border: 1px solid var(--divider);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-action.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(15, 139, 127, 0.3);
+    }
+
+    /* Main Container */
+    .main-wrap {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* WEB PORTAL VIEW */
+    .portal-hero {
+      background: linear-gradient(135deg, #E6F7F3 0%, #D4F2E8 100%);
+      border: 1px solid #BCE9DB;
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .portal-hero {
+      background: linear-gradient(135deg, #15342F 0%, #0F2522 100%);
+      border-color: #234E46;
+    }
+
+    .hero-content {
+      max-width: 650px;
+      z-index: 2;
+    }
+
+    .hero-content h2 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0A5F56;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    [data-theme="dark"] .hero-content h2 {
+      color: #E2F8F3;
+    }
+
+    .hero-content p {
+      font-size: 14px;
+      font-weight: 600;
+      color: #19584E;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    [data-theme="dark"] .hero-content p {
+      color: #A3D8CD;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stat-badge {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    [data-theme="dark"] .stat-badge {
+      background: rgba(24, 36, 35, 0.85);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .stat-badge .stat-num {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .stat-badge .stat-lbl {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Search & Filter Toolbar */
+    .search-filter-card {
+      background: var(--card-bg);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--divider);
+      margin-bottom: 24px;
+    }
+
+    .search-box-large {
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border: 1.5px solid var(--divider);
+      border-radius: 18px;
+      padding: 6px 16px;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+    }
+
+    .search-box-large:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 139, 127, 0.15);
+    }
+
+    .search-box-large input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      padding: 8px 10px;
+    }
+
+    /* Category Navigation Tabs */
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      scrollbar-width: thin;
+    }
+
+    .cat-pill {
+      background: var(--bg);
+      border: 1px solid var(--divider);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .cat-pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .cat-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Secondary Filters Row */
+    .secondary-filters {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--divider);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .filter-chip {
+      background: var(--bg);
+      border: 1px solid var(--divider);
+      color: var(--text-main);
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-chip.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-chip.active.chip-safe {
+      background: var(--safe-green-bg);
+      border-color: var(--safe-green-border);
+      color: var(--safe-green-dark);
+    }
+
+    .filter-chip.active.chip-caution {
+      background: var(--caution-orange-bg);
+      border-color: var(--caution-orange-border);
+      color: var(--caution-orange-dark);
+    }
+
+    /* Additives Grid */
+    .additives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .grid-card {
+      background: var(--card-bg);
+      border: 1px solid var(--divider);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .grid-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(15, 139, 127, 0.12);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .box-lemon { background: #FEF9C3; }
+    .box-flask { background: #FFE4E6; }
+    .box-droplet { background: #DBEAFE; }
+    .box-curcumin { background: #FCE7F3; }
+    .box-leaf { background: #DCFCE7; }
+
+    .card-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-code {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: 0.2px;
+    }
+
+    .card-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      align-self: flex-start;
+    }
+
+    .badge-safe {
+      background: var(--safe-green-bg);
+      border: 1px solid var(--safe-green-border);
+      color: var(--safe-green-dark);
+    }
+
+    .badge-caution {
+      background: var(--caution-orange-bg);
+      border: 1px solid var(--caution-orange-border);
+      color: var(--caution-orange-dark);
+    }
+
+    .badge-noteval {
+      background: var(--neutral-grey-bg);
+      border: 1px solid var(--divider);
+      color: var(--neutral-grey);
+    }
+
+    .card-category {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid var(--divider);
+      margin-top: auto;
+    }
+
+    .dietary-tags {
+      display: flex;
+      gap: 6px;
+    }
+
+    .diet-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: var(--neutral-grey-bg);
+      color: var(--text-muted);
+    }
+
+    .diet-vegan {
+      background: #EDFBF2;
+      color: #15803D;
+    }
+
+    [data-theme="dark"] .diet-vegan {
+      background: #142E1F;
+      color: #86EFAC;
+    }
+
+    .card-btn-view {
+      color: var(--primary);
+      font-size: 12.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+    }
+
+    /* Load More / Pagination Bar */
+    .pagination-bar {
+      text-align: center;
+      padding: 10px 0 30px;
+    }
+
+    .btn-load-more {
+      background: var(--card-bg);
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      padding: 12px 32px;
+      border-radius: 18px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.2s;
+    }
+
+    .btn-load-more:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* MODAL OVERLAY & CARD STYLES */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--divider);
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--neutral-grey-bg);
+      border: none;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    [dir="rtl"] .modal-close-btn {
+      right: auto;
+      left: 20px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .portal-hero {
+        flex-direction: column;
+        padding: 20px;
+      }
+      .top-nav {
+        padding: 12px 16px;
+      }
+      .search-filter-card {
+        padding: 16px;
+      }
+      .hero-content h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Header -->
+  <header class="top-nav">
+    <div class="brand-group" onclick="resetFilters()">
+      <svg class="brand-logo-svg" viewBox="0 0 100 100">
+        <path d="M15,50 Q20,5 65,10 Q50,55 15,50 Z" fill="#22C55E"/>
+        <line x1="20" y1="45" x2="55" y2="18" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+        <circle cx="55" cy="52" r="28" stroke="#0F8B7F" stroke-width="12" fill="none"/>
+        <line x1="35" y1="72" x2="12" y2="95" stroke="#0F8B7F" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 40 40 A 18 18 0 0 1 65 35" stroke="rgba(255,255,255,0.6)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <h1>AddiScan</h1>
+        <span>Know what you eat • Eat Smart. Live Healthy.</span>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <!-- Language Buttons -->
+      <button class="btn-action active" id="btnLangEn" onclick="setLang('en')">🇬🇧 English</button>
+      <button class="btn-action" id="btnLangFr" onclick="setLang('fr')">🇫🇷 Français</button>
+      <button class="btn-action" id="btnLangAr" onclick="setLang('ar')">🇲🇦 العربية (RTL)</button>
+
+      <!-- Theme Mode -->
+      <button class="btn-action" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+  </header>
+
+  <!-- Main Web Directory Container -->
+  <main class="main-wrap">
+
+    <!-- Hero Banner with Stats -->
+    <section class="portal-hero">
+      <div class="hero-content">
+        <h2 id="portalHeroTitle">Complete Food Additives Directory (All 726 E-Codes)</h2>
+        <p id="portalHeroDesc">
+          Explore the comprehensive database of food additives compiled from Open Food Facts and European Food Safety Authority (EFSA) evaluations. Check safety, functions, origins, and dietary classifications.
+        </p>
+
+        <div class="hero-stats-row">
+          <div class="stat-badge">
+            <span class="stat-num" id="statTotalCount">726</span>
+            <span class="stat-lbl" id="statTotalLbl">Total Additives</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-num" style="color:var(--safe-green);" id="statSafeCount">260</span>
+            <span class="stat-lbl" id="statSafeLbl">Generally Safe</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-num" style="color:var(--caution-orange);" id="statCautionCount">65</span>
+            <span class="stat-lbl" id="statCautionLbl">Use with Caution</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="width:120px; height:120px; flex-shrink:0;">
+        <svg viewBox="0 0 120 120" width="120" height="120">
+          <circle cx="40" cy="74" r="30" fill="#EF4444"/>
+          <circle cx="82" cy="78" r="28" fill="#FACC15"/>
+          <path d="M40,24 L84,24 Q84,62 62,80 Q40,62 40,24 Z" fill="white" filter="drop-shadow(0 6px 8px rgba(0,0,0,0.15))"/>
+          <path d="M46,30 L78,30 Q78,58 62,72 Q46,58 46,30 Z" fill="#10B981"/>
+          <path d="M54,49 L60,55 L71,43" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Search & Filters Card -->
+    <section class="search-filter-card">
+      <!-- Search Input -->
+      <div class="search-box-large">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="globalSearchInput" placeholder="Search by E-code (e.g. E330, 621), name (citric acid, acide citrique, حمض الليمون)..." oninput="handleSearch(this.value)">
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="category-pills">
+        <button class="cat-pill active" onclick="setCategoryFilter('all')">All (726)</button>
+        <button class="cat-pill" onclick="setCategoryFilter('colour')">🎨 Colours (E100-E199)</button>
+        <button class="cat-pill" onclick="setCategoryFilter('preservative')">🛡️ Preservatives (E200-E299)</button>
+        <button class="cat-pill" onclick="setCategoryFilter('antioxidant')">🍋 Antioxidants (E300-E399)</button>
+        <button class="cat-pill" onclick="setCategoryFilter('emulsifier')">🧪 Emulsifiers & Stabilisers (E400-E499)</button>
+        <button class="cat-pill" onclick="setCategoryFilter('anti-caking')">🧂 Anti-caking Agents (E500-E599)</button>
+        <button class="cat-pill" onclick="setCategoryFilter('flavour')">🍲 Flavour Enhancers (E600-E699)</button>
+        <button class="cat-pill" onclick="setCategoryFilter('sweetener')">🍬 Sweeteners (E950-E969)</button>
+      </div>
+
+      <!-- Secondary Filters: Safety & Dietary -->
+      <div class="secondary-filters">
+        <div class="filter-group">
+          <span class="filter-label" id="filterStatusLbl">Status:</span>
+          <button class="filter-chip active" id="filterChipAll" onclick="setStatusFilter('all')">All</button>
+          <button class="filter-chip chip-safe" id="filterChipSafe" onclick="setStatusFilter('safe')">🟢 Safe</button>
+          <button class="filter-chip chip-caution" id="filterChipCaution" onclick="setStatusFilter('caution')">🟠 Caution</button>
+          <button class="filter-chip" id="filterChipNotEval" onclick="setStatusFilter('not_evaluated')">⚪ Not Evaluated</button>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label" id="filterDietaryLbl">Dietary:</span>
+          <button class="filter-chip" id="chipVegan" onclick="toggleDietFilter('vegan')">🌱 Vegan</button>
+          <button class="filter-chip" id="chipNatural" onclick="toggleDietFilter('natural')">🌿 Natural Origin</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Counter -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding:0 4px;">
+      <div style="font-size:14px; font-weight:800; color:var(--text-muted);" id="resultsCounterText">
+        Showing 726 additives
+      </div>
+    </div>
+
+    <!-- Additives Grid -->
+    <div class="additives-grid" id="additivesGrid">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Pagination / Load More Bar -->
+    <div class="pagination-bar" id="paginationBar">
+      <button class="btn-load-more" onclick="loadMore()">Load More Additives</button>
+    </div>
+
+    <!-- Footer Credit -->
+    <footer style="text-align:center; padding:30px 20px; border-top:1px solid var(--divider); margin-top:40px;">
+      <div style="font-size:14px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
+        AddiScan — Know what you eat • Eat Smart. Live Healthy.
+      </div>
+      <div style="font-size:13px; font-weight:800; color:var(--primary); margin-bottom:8px;">
+        Crafted by Azzedine
+      </div>
+      <div style="font-size:11.5px; color:var(--text-light); max-width:600px; margin:0 auto; line-height:1.4;">
+        Data sourced directly from Open Food Facts taxonomy and European Food Safety Authority (EFSA) scientific opinions. For reference only, not medical advice.
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Additive Details Modal Dialog -->
+  <div class="modal-overlay" id="detailsModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeDetailsModal()">✕</button>
+
+      <!-- Modal Header -->
+      <div style="text-align:center; margin-bottom:20px;">
+        <div id="modalIconBox" style="width:68px; height:68px; border-radius:20px; display:inline-flex; align-items:center; justify-content:center; font-size:34px; margin-bottom:10px;">🍋</div>
+        <div style="font-size:32px; font-weight:900; color:var(--text-main); letter-spacing:-0.5px;" id="modalCode">E330</div>
+        <div style="font-size:18px; font-weight:700; color:var(--text-main); margin-top:2px;" id="modalName">Citric Acid</div>
+        <div style="display:inline-block; background:var(--primary); color:white; font-size:12px; font-weight:800; padding:4px 14px; border-radius:20px; margin-top:8px;" id="modalCategory">Antioxidant</div>
+      </div>
+
+      <!-- Safety Banner -->
+      <div id="modalSafetyBanner" style="padding:14px 18px; border-radius:18px; margin-bottom:16px;">
+        <div style="font-size:14px; font-weight:900; margin-bottom:3px;" id="modalSafetyTitle">Generally Recognized as Safe</div>
+        <div style="font-size:12px; line-height:1.4; opacity:0.9;" id="modalSafetyDesc">Evaluated by EFSA with no significant overexposure safety risk under standard usage levels.</div>
+      </div>
+
+      <!-- Dietary Tags -->
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:18px;" id="modalDietaryRow">
+        <div class="diet-tag diet-vegan" style="text-align:center; padding:8px 4px; border-radius:12px; font-size:11px; font-weight:800;">🌱 Vegan Friendly</div>
+        <div class="diet-tag" style="text-align:center; padding:8px 4px; border-radius:12px; font-size:11px; font-weight:800; background:#FEF3C7; color:#B45309;">🌾 No Allergen</div>
+        <div class="diet-tag" style="text-align:center; padding:8px 4px; border-radius:12px; font-size:11px; font-weight:800; background:#E6F7F5; color:#0D9488;">🌿 Natural Origin</div>
+      </div>
+
+      <!-- Scientific Details Sections -->
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; line-height:1.5;">
+        <div style="background:var(--bg); padding:14px; border-radius:16px; border:1px solid var(--divider);">
+          <div style="font-weight:800; color:var(--primary); margin-bottom:4px;">🧪 Overview & Role in Food</div>
+          <div id="modalOverview" style="color:var(--text-muted);">Acidulant and pH regulator. Helps to maintain acidity and act as a preservative.</div>
+        </div>
+
+        <div style="background:var(--bg); padding:14px; border-radius:16px; border:1px solid var(--divider);" id="modalOriginWrap">
+          <div style="font-weight:800; color:#16A34A; margin-bottom:4px;">🌱 Origin & Source</div>
+          <div id="modalOrigin" style="color:var(--text-muted);">Naturally found in citrus fruits or produced via microbial fermentation.</div>
+        </div>
+
+        <div style="background:var(--bg); padding:14px; border-radius:16px; border:1px solid var(--divider);" id="modalFoodsWrap">
+          <div style="font-weight:800; color:#2563EB; margin-bottom:4px;">🍽️ Common Foods</div>
+          <div id="modalFoods" style="color:var(--text-muted);">Soft drinks, candies, jams, baked goods, dairy products.</div>
+        </div>
+
+        <div style="background:var(--bg); padding:14px; border-radius:16px; border:1px solid var(--divider);" id="modalRegWrap">
+          <div style="font-weight:800; color:#0D9488; margin-bottom:4px;">🛡️ Regulatory & EFSA Evaluation</div>
+          <div id="modalRegulatory" style="color:var(--text-muted);">Approved by EFSA, FDA and Codex Alimentarius.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; display:flex; gap:10px;">
+        <button class="btn-action" style="flex:1; justify-content:center; padding:12px;" onclick="copyModalAdditiveLink()">🔗 Copy Info</button>
+        <button class="btn-action active" style="flex:1; justify-content:center; padding:12px;" onclick="closeDetailsModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALL 726 ADDITIVES INJECTED HERE -->
+  <script>
+    const ALL_ADDITIVES = /* __ADDITIVES_JSON_DATA__ */;
+
+    // Translations Dictionary
+    const I18N = {
+      en: {
+        heroTitle: "Complete Food Additives Directory (All 726 E-Codes)",
+        heroDesc: "Explore the comprehensive database of food additives compiled from Open Food Facts and European Food Safety Authority (EFSA) evaluations.",
+        totalAdditives: "Total Additives",
+        generallySafe: "Generally Safe",
+        useWithCaution: "Use with Caution",
+        notEvaluated: "Not Evaluated",
+        searchPlaceholder: "Search by E-code (e.g. E330, 621), name (citric acid, acide citrique, حمض الليمون)...",
+        statusLbl: "Status:",
+        dietaryLbl: "Dietary:",
+        showingText: "Showing {count} additives",
+        loadMore: "Load More Additives"
+      },
+      fr: {
+        heroTitle: "Répertoire Complet des Additifs Alimentaires (726 Codes E)",
+        heroDesc: "Explorez la base de données exhaustive des additifs compilée à partir d'Open Food Facts et des évaluations scientifiques de l'EFSA.",
+        totalAdditives: "Total Additifs",
+        generallySafe: "Généralement Sûrs",
+        useWithCaution: "À Consommer avec Modération",
+        notEvaluated: "Non Évalués",
+        searchPlaceholder: "Rechercher par code E (ex. E330, 621) ou nom (acide citrique, glutamate...)...",
+        statusLbl: "Statut :",
+        dietaryLbl: "Régime :",
+        showingText: "Affichage de {count} additifs",
+        loadMore: "Charger Plus d'Additifs"
+      },
+      ar: {
+        heroTitle: "دليل المضافات الغذائية الشامل (جميع رموز E الـ 726)",
+        heroDesc: "استكشف أضخم قاعدة بيانات للمضافات الغذائية مستخلصة مباشرة من Open Food Facts وتقييمات الهيئة الأوروبية لسلامة الأغذية (EFSA).",
+        totalAdditives: "إجمالي المضافات",
+        generallySafe: "آمنة بشكل عام",
+        useWithCaution: "استخدم بحذر",
+        notEvaluated: "غير مقيمة",
+        searchPlaceholder: "ابحث بالرمز (مثل E330, 621) أو الاسم (حمض الليمون, أسبرتام...)...",
+        statusLbl: "الحالة:",
+        dietaryLbl: "النظام الغذائي:",
+        showingText: "عرض {count} مضافاً غذائياً",
+        loadMore: "تحميل المزيد من المضافات"
+      }
+    };
+
+    // State Variables
+    let currentLang = 'en';
+    let searchQuery = '';
+    let selectedCategory = 'all';
+    let selectedStatus = 'all';
+    let filterVegan = false;
+    let filterNatural = false;
+    let displayedCount = 48;
+    const PAGE_SIZE = 48;
+
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateStats();
+      renderGrid();
+    });
+
+    function calculateStats() {
+      const safe = ALL_ADDITIVES.filter(a => a.safety_status === 'safe').length;
+      const caution = ALL_ADDITIVES.filter(a => a.safety_status === 'caution').length;
+      document.getElementById('statTotalCount').textContent = ALL_ADDITIVES.length;
+      document.getElementById('statSafeCount').textContent = safe;
+      document.getElementById('statCautionCount').textContent = caution;
+    }
+
+    function getFilteredAdditives() {
+      const q = searchQuery.trim().toLowerCase();
+
+      return ALL_ADDITIVES.filter(item => {
+        // 1. Text Search (E-code, E-number, English, French, Arabic names)
+        if (q) {
+          const matches = 
+            item.code.toLowerCase().includes(q) ||
+            item.e_number.toLowerCase().includes(q) ||
+            item.name.toLowerCase().includes(q) ||
+            (item.name_fr && item.name_fr.toLowerCase().includes(q)) ||
+            (item.name_ar && item.name_ar.toLowerCase().includes(q)) ||
+            (item.category && item.category.toLowerCase().includes(q));
+          if (!matches) return false;
+        }
+
+        // 2. Category Filter
+        if (selectedCategory !== 'all') {
+          const cat = (item.category || '').toLowerCase();
+          const codeNum = parseInt(item.e_number.replace(/\D/g, ''), 10) || 0;
+
+          if (selectedCategory === 'colour' && !cat.includes('colour') && !(codeNum >= 100 && codeNum <= 199)) return false;
+          if (selectedCategory === 'preservative' && !cat.includes('preservative') && !(codeNum >= 200 && codeNum <= 299)) return false;
+          if (selectedCategory === 'antioxidant' && !cat.includes('antioxidant') && !(codeNum >= 300 && codeNum <= 399)) return false;
+          if (selectedCategory === 'emulsifier' && !cat.includes('emulsifier') && !cat.includes('stabiliser') && !cat.includes('thickener') && !(codeNum >= 400 && codeNum <= 499)) return false;
+          if (selectedCategory === 'anti-caking' && !cat.includes('anti-caking') && !(codeNum >= 500 && codeNum <= 599)) return false;
+          if (selectedCategory === 'flavour' && !cat.includes('flavour') && !(codeNum >= 600 && codeNum <= 699)) return false;
+          if (selectedCategory === 'sweetener' && !cat.includes('sweetener') && !(codeNum >= 950 && codeNum <= 969)) return false;
+        }
+
+        // 3. Safety Status Filter
+        if (selectedStatus !== 'all' && item.safety_status !== selectedStatus) {
+          return false;
+        }
+
+        // 4. Dietary Filters
+        if (filterVegan && item.vegan !== true) return false;
+        if (filterNatural && item.natural_origin !== true) return false;
+
+        return true;
+      });
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('additivesGrid');
+      const filtered = getFilteredAdditives();
+      const count = filtered.length;
+
+      document.getElementById('resultsCounterText').textContent = 
+        I18N[currentLang].showingText.replace('{count}', count);
+
+      const itemsToShow = filtered.slice(0, displayedCount);
+
+      if (itemsToShow.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align:center; padding:50px 20px; color:var(--text-muted);">
+            <div style="font-size:48px; margin-bottom:12px;">🔍</div>
+            <div style="font-size:18px; font-weight:800; color:var(--text-main);">No additives match your criteria</div>
+            <div style="font-size:13px; margin-top:4px;">Try clearing search filters or selecting 'All'</div>
+          </div>
+        `;
+        document.getElementById('paginationBar').style.display = 'none';
+        return;
+      }
+
+      grid.innerHTML = itemsToShow.map(item => {
+        const localizedName = getLocalizedName(item);
+        const icon = getIconEmoji(item);
+        const boxClass = getBoxClass(item.icon_type);
+        const badgeClass = item.safety_status === 'safe' ? 'badge-safe' : (item.safety_status === 'caution' ? 'badge-caution' : 'badge-noteval');
+        const badgeText = item.safety_status === 'safe' ? (I18N[currentLang].generallySafe) : (item.safety_status === 'caution' ? I18N[currentLang].useWithCaution : I18N[currentLang].notEvaluated);
+
+        return `
+          <div class="grid-card" onclick="openDetails('${item.code}')">
+            <div class="card-top">
+              <div class="card-icon-box ${boxClass}">${icon}</div>
+              <div class="card-title-group">
+                <div class="card-code">${item.code}</div>
+                <div class="card-name" title="${localizedName}">${localizedName}</div>
+              </div>
+            </div>
+
+            <div class="card-badge ${badgeClass}">${badgeText}</div>
+            <div class="card-category">${item.category || 'Food Additive'}</div>
+
+            <div class="card-footer">
+              <div class="dietary-tags">
+                ${item.vegan === true ? '<span class="diet-tag diet-vegan">🌱 Vegan</span>' : ''}
+                ${item.natural_origin === true ? '<span class="diet-tag" style="background:#E6F7F5; color:#0D9488;">🌿 Natural</span>' : ''}
+              </div>
+              <span class="card-btn-view">Details →</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Show/Hide Load More button
+      const loadBtn = document.getElementById('paginationBar');
+      loadBtn.style.display = displayedCount < count ? 'block' : 'none';
+    }
+
+    function loadMore() {
+      displayedCount += PAGE_SIZE;
+      renderGrid();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      displayedCount = PAGE_SIZE;
+      renderGrid();
+    }
+
+    function setCategoryFilter(cat) {
+      selectedCategory = cat;
+      displayedCount = PAGE_SIZE;
+      document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderGrid();
+    }
+
+    function setStatusFilter(status) {
+      selectedStatus = status;
+      displayedCount = PAGE_SIZE;
+      document.querySelectorAll('#filterChipAll, #filterChipSafe, #filterChipCaution, #filterChipNotEval')
+        .forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      renderGrid();
+    }
+
+    function toggleDietFilter(type) {
+      if (type === 'vegan') {
+        filterVegan = !filterVegan;
+        document.getElementById('chipVegan').classList.toggle('active', filterVegan);
+      } else if (type === 'natural') {
+        filterNatural = !filterNatural;
+        document.getElementById('chipNatural').classList.toggle('active', filterNatural);
+      }
+      displayedCount = PAGE_SIZE;
+      renderGrid();
+    }
+
+    function resetFilters() {
+      searchQuery = '';
+      selectedCategory = 'all';
+      selectedStatus = 'all';
+      filterVegan = false;
+      filterNatural = false;
+      displayedCount = PAGE_SIZE;
+      document.getElementById('globalSearchInput').value = '';
+      document.querySelectorAll('.cat-pill').forEach((btn, i) => btn.classList.toggle('active', i === 0));
+      document.querySelectorAll('#filterChipAll, #filterChipSafe, #filterChipCaution, #filterChipNotEval')
+        .forEach((btn, i) => btn.classList.toggle('active', i === 0));
+      document.getElementById('chipVegan').classList.remove('active');
+      document.getElementById('chipNatural').classList.remove('active');
+      renderGrid();
+    }
+
+    // Modal Details Logic
+    function openDetails(code) {
+      const item = ALL_ADDITIVES.find(a => a.code.toUpperCase() === code.toUpperCase());
+      if (!item) return;
+
+      const localizedName = getLocalizedName(item);
+      document.getElementById('modalCode').textContent = item.code;
+      document.getElementById('modalName').textContent = localizedName;
+      document.getElementById('modalCategory').textContent = item.category || 'Food Additive';
+      document.getElementById('modalIconBox').textContent = getIconEmoji(item);
+      document.getElementById('modalIconBox').className = `card-icon-box ${getBoxClass(item.icon_type)}`;
+
+      // Safety Banner
+      const banner = document.getElementById('modalSafetyBanner');
+      if (item.safety_status === 'safe') {
+        banner.style.background = 'var(--safe-green-bg)';
+        banner.style.border = '1px solid var(--safe-green-border)';
+        banner.style.color = 'var(--safe-green-dark)';
+        document.getElementById('modalSafetyTitle').textContent = I18N[currentLang].generallySafe;
+      } else if (item.safety_status === 'caution') {
+        banner.style.background = 'var(--caution-orange-bg)';
+        banner.style.border = '1px solid var(--caution-orange-border)';
+        banner.style.color = 'var(--caution-orange-dark)';
+        document.getElementById('modalSafetyTitle').textContent = I18N[currentLang].useWithCaution;
+      } else {
+        banner.style.background = 'var(--neutral-grey-bg)';
+        banner.style.border = '1px solid var(--divider)';
+        banner.style.color = 'var(--neutral-grey)';
+        document.getElementById('modalSafetyTitle').textContent = I18N[currentLang].notEvaluated;
+      }
+      document.getElementById('modalSafetyDesc').textContent = item.safety_description || 'Evaluated within EFSA standards.';
+
+      // Overview, Origin, Foods, Regulatory
+      document.getElementById('modalOverview').textContent = item.overview || 'Standard food additive utilized in manufacturing according to regulatory allowances.';
+      
+      const originWrap = document.getElementById('modalOriginWrap');
+      if (item.origin) {
+        originWrap.style.display = 'block';
+        document.getElementById('modalOrigin').textContent = item.origin;
+      } else {
+        originWrap.style.display = 'none';
+      }
+
+      const foodsWrap = document.getElementById('modalFoodsWrap');
+      if (item.common_foods) {
+        foodsWrap.style.display = 'block';
+        document.getElementById('modalFoods').textContent = item.common_foods;
+      } else {
+        foodsWrap.style.display = 'none';
+      }
+
+      const regWrap = document.getElementById('modalRegWrap');
+      if (item.regulatory_notes) {
+        regWrap.style.display = 'block';
+        document.getElementById('modalRegulatory').textContent = item.regulatory_notes;
+      } else {
+        regWrap.style.display = 'none';
+      }
+
+      document.getElementById('detailsModal').classList.add('open');
+    }
+
+    function closeDetailsModal() {
+      document.getElementById('detailsModal').classList.remove('open');
+    }
+
+    function closeModalOnOverlay(e) {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeDetailsModal();
+      }
+    }
+
+    function copyModalAdditiveLink() {
+      const code = document.getElementById('modalCode').textContent;
+      const name = document.getElementById('modalName').textContent;
+      const text = `${code} - ${name} | AddiScan Food Additive Directory`;
+      navigator.clipboard.writeText(text);
+      alert('Copied to clipboard: ' + text);
+    }
+
+    // Helper Functions
+    function getLocalizedName(item) {
+      if (currentLang === 'fr' && item.name_fr) return item.name_fr;
+      if (currentLang === 'ar' && item.name_ar) return item.name_ar;
+      return item.name;
+    }
+
+    function getIconEmoji(item) {
+      const c = item.code.toUpperCase();
+      if (c === 'E330') return '🍋';
+      if (c.includes('150') || c.includes('CARAMEL')) return '💧';
+      if (c === 'E100' || c.includes('CURCUMIN')) return '🌿';
+      if (item.icon_type === 'droplet') return '💧';
+      if (item.icon_type === 'leaf') return '🌱';
+      return '🧪';
+    }
+
+    function getBoxClass(type) {
+      switch (type) {
+        case 'lemon': return 'box-lemon';
+        case 'droplet': return 'box-droplet';
+        case 'curcumin': return 'box-curcumin';
+        case 'leaf': return 'box-leaf';
+        case 'flask':
+        default: return 'box-flask';
+      }
+    }
+
+    // Language Selector
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+      document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+      document.getElementById('btnLangFr').classList.toggle('active', lang === 'fr');
+      document.getElementById('btnLangAr').classList.toggle('active', lang === 'ar');
+
+      const dict = I18N[lang];
+      document.getElementById('portalHeroTitle').textContent = dict.heroTitle;
+      document.getElementById('portalHeroDesc').textContent = dict.heroDesc;
+      document.getElementById('statTotalLbl').textContent = dict.totalAdditives;
+      document.getElementById('statSafeLbl').textContent = dict.generallySafe;
+      document.getElementById('statCautionLbl').textContent = dict.useWithCaution;
+      document.getElementById('globalSearchInput').placeholder = dict.searchPlaceholder;
+      document.getElementById('filterStatusLbl').textContent = dict.statusLbl;
+      document.getElementById('filterDietaryLbl').textContent = dict.dietaryLbl;
+
+      renderGrid();
+    }
+
+    // Theme Mode
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('themeBtn').textContent = '🌙 Dark Mode';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeBtn').textContent = '☀️ Light Mode';
+      }
+    }
+  </script>
+
+</body>
+</html>
