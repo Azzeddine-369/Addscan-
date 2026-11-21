@@ -1,0 +1,2616 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AddiScan — Know What You Eat | Crafted by Azzedine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0F8B7F;
+      --primary-dark: #0A6B61;
+      --primary-light: #E4F4F2;
+      --primary-soft: #C7EBE6;
+      --safe-green: #10B981;
+      --safe-green-dark: #047857;
+      --safe-green-bg: #E8F8F0;
+      --safe-green-border: #A7F3D0;
+      --caution-orange: #F59E0B;
+      --caution-orange-dark: #B45309;
+      --caution-orange-bg: #FFF7ED;
+      --caution-orange-border: #FDE68A;
+      --neutral-grey: #6B7280;
+      --neutral-grey-bg: #F3F4F6;
+      --bg: #F8FAF9;
+      --card-bg: #FFFFFF;
+      --text-main: #1F2937;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --divider: #E5E7EB;
+      --radius-card: 20px;
+      --radius-pill: 30px;
+      --shadow-soft: 0 4px 18px rgba(0, 0, 0, 0.05);
+      --shadow-hover: 0 6px 24px rgba(15, 139, 127, 0.12);
+      --font: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg: #111817;
+      --card-bg: #1A2524;
+      --text-main: #F9FAFB;
+      --text-muted: #9CA3AF;
+      --text-light: #6B7280;
+      --divider: #263836;
+      --primary-light: #18332F;
+      --safe-green-bg: #122921;
+      --safe-green-border: #1E4D3E;
+      --caution-orange-bg: #2E2211;
+      --caution-orange-border: #523916;
+      --neutral-grey-bg: #222E2C;
+      --shadow-soft: 0 4px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    [dir="rtl"] {
+      --font: 'Tajawal', 'Nunito', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: var(--font);
+    }
+
+    body {
+      background: #E8EFEF;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 10px 40px;
+      transition: background 0.3s ease;
+    }
+
+    /* Top Web Bar Controls */
+    .top-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1240px;
+      background: var(--card-bg);
+      padding: 12px 24px;
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .brand-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .controls-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-toggle {
+      background: var(--neutral-grey-bg);
+      border: 1px solid var(--divider);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-toggle:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-toggle.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Main Showcase Area */
+    .showcase-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      width: 100%;
+      max-width: 1300px;
+      transition: all 0.3s ease;
+    }
+
+    /* Single Phone Mockup Frame */
+    .phone-mockup {
+      width: 395px;
+      height: 844px;
+      background: var(--bg);
+      border-radius: 46px;
+      border: 10px solid #1F2937;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    /* Dynamic Island / Notch */
+    .phone-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: #1F2937;
+      border-radius: 14px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+    }
+
+    .notch-camera {
+      width: 10px;
+      height: 10px;
+      background: #0D1117;
+      border-radius: 50%;
+      border: 1.5px solid #2D3748;
+    }
+
+    .notch-sensor {
+      width: 6px;
+      height: 6px;
+      background: #111827;
+      border-radius: 50%;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      height: 48px;
+      padding: 14px 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      z-index: 90;
+      flex-shrink: 0;
+    }
+
+    .status-icons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    /* Phone Screen Container */
+    .screen-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      scroll-behavior: smooth;
+    }
+
+    .screen-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    .screen-content::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.15);
+      border-radius: 4px;
+    }
+
+    /* Screens: Home, Details, History */
+    .app-screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .app-screen.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      height: 68px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 10px 10px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 18px;
+      height: 2.5px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .nav-icon {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* HOME SCREEN STYLES */
+    .home-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 20px 12px;
+    }
+
+    .header-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo-svg {
+      width: 38px;
+      height: 38px;
+    }
+
+    .header-title-text h1 {
+      font-size: 18px;
+      font-weight: 900;
+      color: #0A5F56;
+      line-height: 1.1;
+    }
+
+    .header-title-text span {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .btn-icon-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-main);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Hero Banner Card */
+    .hero-banner {
+      margin: 4px 18px 16px;
+      background: linear-gradient(135deg, #E6F7F3 0%, #D4F2E8 100%);
+      border: 1px solid #BCE9DB;
+      border-radius: 24px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .hero-banner {
+      background: linear-gradient(135deg, #15342F 0%, #0F2522 100%);
+      border-color: #234E46;
+    }
+
+    .hero-text {
+      flex: 1;
+      z-index: 2;
+    }
+
+    .hero-text h2 {
+      font-size: 18px;
+      font-weight: 900;
+      color: #0B4F45;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+
+    [data-theme="dark"] .hero-text h2 {
+      color: #E2F8F3;
+    }
+
+    .hero-text p {
+      font-size: 12px;
+      font-weight: 600;
+      color: #19584E;
+      line-height: 1.35;
+    }
+
+    [data-theme="dark"] .hero-text p {
+      color: #A3D8CD;
+    }
+
+    .hero-art {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* Search Bar */
+    .search-bar-wrap {
+      padding: 0 18px;
+      margin-bottom: 18px;
+    }
+
+    .search-bar {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 6px 8px 6px 16px;
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--divider);
+      transition: all 0.2s;
+    }
+
+    .search-bar:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 139, 127, 0.15);
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      padding: 8px 0;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .btn-scan-camera {
+      width: 42px;
+      height: 42px;
+      background: var(--primary);
+      border-radius: 14px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15, 139, 127, 0.35);
+      transition: transform 0.15s;
+    }
+
+    .btn-scan-camera:hover {
+      transform: scale(1.05);
+    }
+
+    /* Section Headers */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px 10px;
+    }
+
+    .section-head h3 {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-link {
+      color: var(--primary);
+      font-size: 12.5px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Popular Searches Horizontal Row */
+    .popular-chips {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 18px 18px;
+      scrollbar-width: none;
+    }
+
+    .popular-chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .popular-chip {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--divider);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .popular-chip:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .chip-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chip-code {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Additive List Cards */
+    .additives-list {
+      padding: 0 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .additive-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--divider);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .additive-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-1.5px);
+    }
+
+    .additive-thumb {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .thumb-lemon { background: #FEF9C3; }
+    .thumb-flask { background: #FFE4E6; }
+    .thumb-droplet { background: #DBEAFE; }
+    .thumb-curcumin { background: #FCE7F3; }
+    .thumb-leaf { background: #DCFCE7; }
+
+    .additive-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .meta-code {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: 0.2px;
+    }
+
+    .meta-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meta-time {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-safe {
+      background: var(--safe-green-bg);
+      color: var(--safe-green-dark);
+      border: 0.8px solid var(--safe-green-border);
+    }
+
+    .badge-caution {
+      background: var(--caution-orange-bg);
+      color: var(--caution-orange-dark);
+      border: 0.8px solid var(--caution-orange-border);
+    }
+
+    .badge-noteval {
+      background: var(--neutral-grey-bg);
+      color: var(--neutral-grey);
+      border: 0.8px solid var(--divider);
+    }
+
+    .card-arrow {
+      color: var(--text-light);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Footer Credit */
+    .app-footer {
+      padding: 16px 20px 10px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .footer-dash {
+      width: 24px;
+      height: 1.5px;
+      background: rgba(15, 139, 127, 0.4);
+      border-radius: 1px;
+    }
+
+    .footer-credit-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .footer-credit-name {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    /* SCREEN 2: DETAILS SCREEN */
+    .details-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px 12px;
+    }
+
+    .details-nav-bar h2 {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .details-hero {
+      text-align: center;
+      padding: 10px 20px 16px;
+    }
+
+    .details-large-image {
+      width: 140px;
+      height: 120px;
+      margin: 0 auto 10px;
+      position: relative;
+    }
+
+    .details-code {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .details-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    .category-chip {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+
+    /* Safety Banner */
+    .safety-banner {
+      margin: 12px 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .safety-banner.safe-banner {
+      background: var(--safe-green-bg);
+      border: 1px solid var(--safe-green-border);
+    }
+
+    .safety-banner.caution-banner {
+      background: var(--caution-orange-bg);
+      border: 1px solid var(--caution-orange-border);
+    }
+
+    .banner-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .banner-content {
+      flex: 1;
+    }
+
+    .banner-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--safe-green-dark);
+      margin-bottom: 2px;
+    }
+
+    .caution-banner .banner-title {
+      color: var(--caution-orange-dark);
+    }
+
+    .banner-subtitle {
+      font-size: 11.5px;
+      line-height: 1.35;
+      color: var(--text-main);
+      opacity: 0.85;
+      font-weight: 500;
+    }
+
+    .banner-info-btn {
+      color: var(--safe-green-dark);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .caution-banner .banner-info-btn {
+      color: var(--caution-orange-dark);
+    }
+
+    /* Tag Cards */
+    .tag-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 4px 18px 16px;
+    }
+
+    .tag-card {
+      padding: 10px 6px;
+      border-radius: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid transparent;
+    }
+
+    .tag-vegan { background: #EDFBF2; border-color: #C6F6D5; color: #15803D; }
+    .tag-allergen { background: #FEF3C7; border-color: #FDE68A; color: #B45309; }
+    .tag-origin { background: #E6F7F5; border-color: #A7F3D0; color: #0D9488; }
+
+    [data-theme="dark"] .tag-vegan { background: #142E1F; border-color: #22543D; color: #86EFAC; }
+    [data-theme="dark"] .tag-allergen { background: #332410; border-color: #5F370E; color: #FCD34D; }
+    [data-theme="dark"] .tag-origin { background: #132B27; border-color: #1F4B43; color: #5EEAD4; }
+
+    .tag-label {
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    /* Accordion Sections */
+    .accordion-list {
+      margin: 0 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .accordion-item {
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .accordion-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .accordion-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-box-blue { background: #E0F2FE; color: #0284C7; }
+    .icon-box-green { background: #DCFCE7; color: #16A34A; }
+    .icon-box-purple { background: #EDE9FE; color: #7C3AED; }
+    .icon-box-teal { background: #CCFBF1; color: #0F766E; }
+
+    .accordion-title {
+      flex: 1;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .accordion-chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--text-light);
+      transition: transform 0.25s ease;
+    }
+
+    .accordion-item.open .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      display: none;
+      padding: 0 16px 14px 58px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .accordion-item.open .accordion-body {
+      display: block;
+    }
+
+    /* Bottom Action Buttons */
+    .details-actions-row {
+      display: flex;
+      gap: 10px;
+      padding: 10px 18px 20px;
+    }
+
+    .btn-action-outline {
+      flex: 4;
+      background: transparent;
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-action-filled {
+      flex: 6;
+      background: var(--primary);
+      border: none;
+      color: white;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(15, 139, 127, 0.35);
+      transition: all 0.15s;
+    }
+
+    .btn-action-filled:hover {
+      background: var(--primary-dark);
+    }
+
+    /* SCREEN 3: HISTORY & SAVED */
+    .history-head-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px 12px;
+    }
+
+    .history-head-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .history-head-title h2 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+    }
+
+    /* Segmented Control Pill */
+    .segmented-control {
+      margin: 0 18px 14px;
+      background: var(--neutral-grey-bg);
+      border-radius: 16px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .segment-btn {
+      flex: 1;
+      padding: 9px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .segment-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(15, 139, 127, 0.3);
+    }
+
+    /* Filter Bar */
+    .filter-bar-wrap {
+      margin: 0 18px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-input-box {
+      flex: 1;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .filter-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Did You Know Card */
+    .did-you-know-card {
+      margin: auto 18px 12px;
+      background: #EBF7F2;
+      border: 1px solid #C7EBDD;
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    [data-theme="dark"] .did-you-know-card {
+      background: #173129;
+      border-color: #244B3F;
+    }
+
+    .dyk-icon-box {
+      width: 36px;
+      height: 36px;
+      background: rgba(16, 185, 129, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #047857;
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .dyk-icon-box {
+      color: #34D399;
+    }
+
+    .dyk-content h4 {
+      font-size: 13px;
+      font-weight: 900;
+      color: #065F46;
+      margin-bottom: 2px;
+    }
+
+    [data-theme="dark"] .dyk-content h4 {
+      color: #6EE7B7;
+    }
+
+    .dyk-content p {
+      font-size: 11.5px;
+      line-height: 1.35;
+      color: #1F4B3C;
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .dyk-content p {
+      color: #D1FAE5;
+    }
+
+    .dyk-thumb {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+    }
+
+    /* Modal Sheets */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 28px 28px 0 0;
+      padding: 18px 20px 28px;
+      max-height: 85%;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.open .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      width: 42px;
+      height: 4px;
+      background: var(--divider);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(15, 139, 127, 0.95);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Full Design 3-Screens Layout Mode */
+    .showcase-container.overview-mode {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .showcase-container.overview-mode .phone-mockup {
+      width: 375px;
+      height: 780px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .showcase-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .phone-mockup {
+        width: 100%;
+        max-width: 395px;
+        height: 820px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Web Showcase Toolbar -->
+  <header class="top-controls">
+    <div class="brand-badge">
+      <svg class="header-logo-svg" viewBox="0 0 100 100">
+        <path d="M15,50 Q20,5 65,10 Q50,55 15,50 Z" fill="#22C55E"/>
+        <line x1="20" y1="45" x2="55" y2="18" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+        <circle cx="55" cy="52" r="28" stroke="#0F8B7F" stroke-width="12" fill="none"/>
+        <line x1="35" y1="72" x2="12" y2="95" stroke="#0F8B7F" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 40 40 A 18 18 0 0 1 65 35" stroke="rgba(255,255,255,0.6)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="brand-title">AddiScan <span style="font-size:12px; font-weight:700; color:var(--text-muted); background:var(--primary-light); padding:2px 8px; border-radius:10px;">HTML Web Edition</span></div>
+        <div class="brand-tagline">Know what you eat • Eat Smart. Live Healthy.</div>
+      </div>
+    </div>
+
+    <div class="controls-actions">
+      <!-- Language Selector -->
+      <button class="btn-toggle" onclick="setLanguage('en')">🇬🇧 English</button>
+      <button class="btn-toggle" onclick="setLanguage('fr')">🇫🇷 Français</button>
+      <button class="btn-toggle" onclick="setLanguage('ar')">🇲🇦 العربية (RTL)</button>
+
+      <!-- Theme Mode -->
+      <button class="btn-toggle" id="themeToggleBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+      <!-- Screen Switcher for Phone Mockup -->
+      <button class="btn-toggle active" id="btnTabHome" onclick="switchPhoneScreen('home')">Home</button>
+      <button class="btn-toggle" id="btnTabDetails" onclick="switchPhoneScreen('details', 'E330')">Details (E330)</button>
+      <button class="btn-toggle" id="btnTabHistory" onclick="switchPhoneScreen('history')">History</button>
+    </div>
+  </header>
+
+  <!-- Showcase Area -->
+  <main class="showcase-container" id="showcaseArea">
+
+    <!-- Interactive Mobile Phone Frame -->
+    <div class="phone-mockup" id="mainPhone">
+      
+      <!-- Top Dynamic Island Notch -->
+      <div class="phone-notch">
+        <div class="notch-sensor"></div>
+        <div class="notch-camera"></div>
+      </div>
+
+      <!-- iOS / Android Status Bar -->
+      <div class="status-bar">
+        <span id="statusBarTime">9:41</span>
+        <div class="status-icons">
+          <svg width="16" height="12" viewBox="0 0 18 12" fill="currentColor">
+            <path d="M1 10h2v2H1zm4-3h2v5H5zm4-3h2v8H9zm4-4h2v12h-2z"/>
+          </svg>
+          <svg width="15" height="11" viewBox="0 0 16 12" fill="currentColor">
+            <path d="M8 2.5a10.9 10.9 0 0 1 7 2.6l-7 8.4-7-8.4A10.9 10.9 0 0 1 8 2.5z"/>
+          </svg>
+          <svg width="22" height="11" viewBox="0 0 25 12" fill="currentColor">
+            <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="currentColor"/>
+            <rect x="2" y="2" width="16" height="8" rx="2"/>
+            <path d="M23 4v4c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1z"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Scrollable Phone Screen Content -->
+      <div class="screen-content">
+
+        <!-- ================= SCREEN 1: HOME ================= -->
+        <div class="app-screen active" id="screenHome">
+          
+          <!-- Header Bar -->
+          <div class="home-header">
+            <div class="header-logo-group">
+              <svg class="header-logo-svg" viewBox="0 0 100 100">
+                <path d="M15,50 Q20,5 65,10 Q50,55 15,50 Z" fill="#22C55E"/>
+                <line x1="20" y1="45" x2="55" y2="18" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+                <circle cx="55" cy="52" r="28" stroke="#0F8B7F" stroke-width="12" fill="none"/>
+                <line x1="35" y1="72" x2="12" y2="95" stroke="#0F8B7F" stroke-width="14" stroke-linecap="round"/>
+                <path d="M 40 40 A 18 18 0 0 1 65 35" stroke="rgba(255,255,255,0.6)" stroke-width="5" fill="none" stroke-linecap="round"/>
+              </svg>
+              <div class="header-title-text">
+                <h1 data-i18n="appName">AddiScan</h1>
+                <span data-i18n="taglineHome">Know what you eat</span>
+              </div>
+            </div>
+
+            <button class="btn-icon-circle" onclick="openSettingsModal()" title="Settings">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Hero Banner with Fruit Illustration & Shield -->
+          <div class="hero-banner">
+            <div class="hero-text">
+              <h2 data-i18n="heroTitle">Scan or search<br>food additives</h2>
+              <p data-i18n="heroSubtitle">Get clear, reliable information in seconds!</p>
+            </div>
+            <div class="hero-art">
+              <svg viewBox="0 0 120 120" width="100" height="100">
+                <!-- Red Tomato / Fruit -->
+                <circle cx="38" cy="74" r="30" fill="url(#tomatoGrad)"/>
+                <path d="M38,44 Q42,38 46,44 Q40,42 38,44 Z" fill="#15803D"/>
+                <!-- Yellow Lemon -->
+                <circle cx="82" cy="78" r="28" fill="url(#lemonGrad)"/>
+                <!-- Fresh Leaf -->
+                <path d="M72,40 Q90,16 108,34 Q90,52 72,40 Z" fill="#22C55E"/>
+                <!-- White & Green Security Shield in Center -->
+                <path d="M40,24 L84,24 Q84,62 62,80 Q40,62 40,24 Z" fill="white" filter="drop-shadow(0 6px 8px rgba(0,0,0,0.15))"/>
+                <path d="M46,30 L78,30 Q78,58 62,72 Q46,58 46,30 Z" fill="url(#shieldGrad)"/>
+                <!-- Checkmark -->
+                <path d="M54,49 L60,55 L71,43" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                
+                <defs>
+                  <radialGradient id="tomatoGrad" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#F87171"/>
+                    <stop offset="100%" stop-color="#DC2626"/>
+                  </radialGradient>
+                  <radialGradient id="lemonGrad" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#FDE047"/>
+                    <stop offset="100%" stop-color="#EAB308"/>
+                  </radialGradient>
+                  <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#22C55E"/>
+                    <stop offset="100%" stop-color="#16A34A"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Search Bar with Barcode Scanner Button -->
+          <div class="search-bar-wrap">
+            <div class="search-bar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2.5" style="margin-right: 10px;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="search-input" id="homeSearchInput" data-i18n-placeholder="searchHint" placeholder="Search for an E-code... (e.g. E330, E621)" oninput="handleHomeSearch(this.value)">
+              <button class="btn-scan-camera" onclick="openScannerModal()" title="Scan Barcode">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+                  <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+                  <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+                  <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+                  <line x1="7" y1="12" x2="17" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Search Results Dropdown Area -->
+          <div id="homeSearchResults" style="display:none; padding: 0 18px 14px;"></div>
+
+          <!-- Home Default Feed -->
+          <div id="homeDefaultContent">
+            <!-- Popular Searches Section -->
+            <div class="section-head">
+              <h3 data-i18n="popularSearches">Popular Searches</h3>
+              <a class="section-link" onclick="viewAllCatalog()"><span data-i18n="seeAll">See all</span> →</a>
+            </div>
+
+            <div class="popular-chips">
+              <div class="popular-chip" onclick="openAdditiveDetails('E330')">
+                <div class="chip-icon" style="background:#FEF9C3;">🍋</div>
+                <span class="chip-code">E330</span>
+              </div>
+              <div class="popular-chip" onclick="openAdditiveDetails('E621')">
+                <div class="chip-icon" style="background:#FFE4E6;">🧪</div>
+                <span class="chip-code">E621</span>
+              </div>
+              <div class="popular-chip" onclick="openAdditiveDetails('E150d')">
+                <div class="chip-icon" style="background:#DBEAFE;">💧</div>
+                <span class="chip-code">E150d</span>
+              </div>
+              <div class="popular-chip" onclick="openAdditiveDetails('E100')">
+                <div class="chip-icon" style="background:#FCE7F3;">🌿</div>
+                <span class="chip-code">E100</span>
+              </div>
+            </div>
+
+            <!-- Recent Searches Section -->
+            <div class="section-head">
+              <h3>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span data-i18n="recentSearches">Your Recent Searches</span>
+              </h3>
+              <a class="section-link" onclick="switchPhoneScreen('history')"><span data-i18n="seeAll">See all</span> →</a>
+            </div>
+
+            <div class="additives-list" id="homeRecentList">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Footer Credit -->
+            <footer class="app-footer">
+              <div class="footer-line">
+                <div class="footer-dash"></div>
+                <div class="footer-credit-text">Crafted by <span class="footer-credit-name">Azzedine</span></div>
+                <div class="footer-dash"></div>
+              </div>
+            </footer>
+          </div>
+
+        </div>
+
+        <!-- ================= SCREEN 2: ADDITIVE DETAILS ================= -->
+        <div class="app-screen" id="screenDetails">
+          
+          <!-- Top Bar -->
+          <div class="details-nav-bar">
+            <button class="btn-icon-circle" onclick="switchPhoneScreen('home')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <h2 data-i18n="detailsTitle">Additive Details</h2>
+            <div style="display:flex; gap:6px;">
+              <button class="btn-icon-circle" id="detailsBookmarkBtn" onclick="toggleCurrentBookmark()" title="Bookmark">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+              <button class="btn-icon-circle" onclick="shareCurrentAdditive()" title="Share">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Details Visual -->
+          <div class="details-hero">
+            <div class="details-large-image" id="detailsHeroImage">
+              <!-- Dynamic Illustration -->
+            </div>
+            <div class="details-code" id="detailsCode">E330</div>
+            <div class="details-name" id="detailsName">Citric Acid</div>
+            <div class="category-chip" id="detailsCategory">Acidity Regulator / Antioxidant</div>
+          </div>
+
+          <!-- Safety Banner -->
+          <div class="safety-banner safe-banner" id="detailsSafetyBanner" onclick="openSafetyModal()">
+            <svg class="banner-icon" viewBox="0 0 24 24" fill="#047857">
+              <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.06 13.54L7.4 12l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41-5.64 5.66z"/>
+            </svg>
+            <div class="banner-content">
+              <div class="banner-title" id="detailsSafetyTitle">Generally Recognized as Safe</div>
+              <div class="banner-subtitle" id="detailsSafetyDesc">Widely used in food, with no major health concerns at normal levels.</div>
+            </div>
+            <svg class="banner-info-btn" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+          </div>
+
+          <!-- 3 Tag Cards -->
+          <div class="tag-cards-grid" id="detailsTagsRow">
+            <div class="tag-card tag-vegan">
+              <span style="font-size:20px;">🌱</span>
+              <span class="tag-label" data-i18n="veganFriendly">Vegan Friendly</span>
+            </div>
+            <div class="tag-card tag-allergen">
+              <span style="font-size:20px;">🌾</span>
+              <span class="tag-label" data-i18n="noMajorAllergen">No Major Allergen</span>
+            </div>
+            <div class="tag-card tag-origin">
+              <span style="font-size:20px;">🌐</span>
+              <span class="tag-label" data-i18n="naturalOrigin">Natural Origin</span>
+            </div>
+          </div>
+
+          <!-- Accordion Expandable Sections -->
+          <div class="accordion-list">
+            <div class="accordion-item open" onclick="toggleAccordion(this)">
+              <div class="accordion-header">
+                <div class="accordion-icon-box icon-box-blue">🧪</div>
+                <div class="accordion-title" data-i18n="overviewRole">Overview & Role in Food</div>
+                <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <div class="accordion-body" id="detailsOverview">
+                Acidulant and pH regulator. Helps to maintain acidity, enhance flavour and act as a preservative.
+              </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+              <div class="accordion-header">
+                <div class="accordion-icon-box icon-box-green">🌱</div>
+                <div class="accordion-title" data-i18n="originSource">Origin / Source</div>
+                <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <div class="accordion-body" id="detailsOrigin">
+                Naturally found in citrus fruits. Can also be produced synthetically via Aspergillus niger fermentation.
+              </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+              <div class="accordion-header">
+                <div class="accordion-icon-box icon-box-purple">🍽️</div>
+                <div class="accordion-title" data-i18n="commonFoods">Common Foods Where It Appears</div>
+                <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <div class="accordion-body" id="detailsFoods">
+                Soft drinks, candies, jams, baked goods, dairy products, canned vegetables.
+              </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+              <div class="accordion-header">
+                <div class="accordion-icon-box icon-box-teal">🛡️</div>
+                <div class="accordion-title" data-i18n="regulatoryNotes">Regulatory & Safety Notes</div>
+                <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <div class="accordion-body" id="detailsRegulatory">
+                Approved by EFSA, FDA and Codex Alimentarius. Generally recognized as safe at typical use levels.
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Buttons -->
+          <div class="details-actions-row">
+            <button class="btn-action-outline" onclick="openCompareModal()">
+              <span>⚖️</span>
+              <span data-i18n="compare">Compare</span>
+            </button>
+            <button class="btn-action-filled" onclick="openReportModal()">
+              <span>⚠️</span>
+              <span data-i18n="reportUpdate">Report / Suggest Update</span>
+            </button>
+          </div>
+
+          <!-- Disclaimer -->
+          <div style="font-size:11px; text-align:center; color:var(--text-light); padding:0 20px 14px;">
+            Information for reference only, not medical advice.
+          </div>
+
+        </div>
+
+        <!-- ================= SCREEN 3: HISTORY & SAVED ================= -->
+        <div class="app-screen" id="screenHistory">
+          
+          <div class="history-head-bar">
+            <div class="history-head-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <h2 data-i18n="historySavedTitle">History & Saved</h2>
+            </div>
+            <button class="btn-icon-circle" onclick="cycleStatusFilter()" title="Filter by status">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Segmented Toggle: History | Saved -->
+          <div class="segmented-control">
+            <button class="segment-btn active" id="segHistoryBtn" onclick="setHistorySegment(0)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span data-i18n="historyTab">History</span>
+            </button>
+            <button class="segment-btn" id="segSavedBtn" onclick="setHistorySegment(1)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              <span data-i18n="savedTab">Saved</span>
+            </button>
+          </div>
+
+          <!-- Filter Search Box -->
+          <div class="filter-bar-wrap">
+            <div class="filter-input-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="filter-input" id="historyFilterInput" data-i18n-placeholder="filterHint" placeholder="Filter by code or name..." oninput="filterHistoryList(this.value)">
+              <span id="currentStatusFilterBadge" style="font-size:11px; font-weight:800; color:var(--primary); background:var(--primary-light); padding:2px 8px; border-radius:10px; cursor:pointer;" onclick="cycleStatusFilter()">All</span>
+            </div>
+          </div>
+
+          <!-- Items List with Swipe-to-delete support -->
+          <div class="additives-list" id="historyItemList">
+            <!-- Populated via JS -->
+          </div>
+
+          <!-- Did You Know Tip Card -->
+          <div class="did-you-know-card">
+            <div class="dyk-icon-box">💡</div>
+            <div class="dyk-content">
+              <h4 data-i18n="didYouKnow">Did you know?</h4>
+              <p data-i18n="didYouKnowFact">E330 is naturally found in citrus fruits and is one of the most common food additives.</p>
+            </div>
+            <div class="dyk-thumb">🍋</div>
+          </div>
+
+          <!-- Footer Credit -->
+          <footer class="app-footer" style="padding-top:4px;">
+            <div class="footer-line">
+              <div class="footer-dash"></div>
+              <div class="footer-credit-text">Crafted by <span class="footer-credit-name">Azzedine</span></div>
+              <div class="footer-dash"></div>
+            </div>
+          </footer>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Navigation Bar (4 Tabs) -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" id="navHome" onclick="switchPhoneScreen('home')">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          <span data-i18n="home">Home</span>
+        </button>
+        <button class="nav-item" id="navSaved" onclick="switchPhoneScreen('history', null, 1)">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+          <span data-i18n="savedTab">Saved</span>
+        </button>
+        <button class="nav-item" id="navHistory" onclick="switchPhoneScreen('history', null, 0)">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+          <span data-i18n="historyTab">History</span>
+        </button>
+        <button class="nav-item" id="navAbout" onclick="openAboutModal()">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span data-i18n="about">About</span>
+        </button>
+      </nav>
+
+      <!-- Safety Info Modal Bottom Sheet -->
+      <div class="modal-overlay" id="safetyModal" onclick="closeModals(event)">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+          <div class="modal-handle"></div>
+          <div class="modal-title">
+            <span style="font-size:22px;">🛡️</span>
+            <span data-i18n="safetyLevels">Safety Levels Explained</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
+            <div style="background:var(--safe-green-bg); border:1px solid var(--safe-green-border); border-radius:14px; padding:12px;">
+              <div style="font-weight:900; color:var(--safe-green-dark); font-size:13.5px; margin-bottom:4px;" data-i18n="generallyRecognizedAsSafe">Generally Recognized as Safe</div>
+              <div style="font-size:12px; line-height:1.4; color:var(--text-main);" data-i18n="safetySafeDesc">Evaluated by EFSA and food authorities with no adverse overexposure risks noted under typical food use.</div>
+            </div>
+
+            <div style="background:var(--caution-orange-bg); border:1px solid var(--caution-orange-border); border-radius:14px; padding:12px;">
+              <div style="font-weight:900; color:var(--caution-orange-dark); font-size:13.5px; margin-bottom:4px;" data-i18n="useWithCaution">Use with Caution</div>
+              <div style="font-size:12px; line-height:1.4; color:var(--text-main);" data-i18n="safetyCautionDesc">Flagged with high overexposure risks, genotoxicity concerns (e.g. E171), or special health warnings (e.g. E951 PKU).</div>
+            </div>
+
+            <div style="background:var(--neutral-grey-bg); border:1px solid var(--divider); border-radius:14px; padding:12px;">
+              <div style="font-weight:900; color:var(--neutral-grey); font-size:13.5px; margin-bottom:4px;" data-i18n="notEvaluated">Not Evaluated</div>
+              <div style="font-size:12px; line-height:1.4; color:var(--text-main);" data-i18n="safetyNotEvalDesc">Lacks conclusive recent EFSA re-evaluation in the Open Food Facts taxonomy.</div>
+            </div>
+          </div>
+
+          <button class="btn-action-filled" style="width:100%;" onclick="closeAllModals()">Got it</button>
+        </div>
+      </div>
+
+      <!-- Barcode Scanner Modal Sheet -->
+      <div class="modal-overlay" id="scannerModal" onclick="closeModals(event)">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+          <div class="modal-handle"></div>
+          <div class="modal-title">
+            <span style="font-size:22px;">📷</span>
+            <span data-i18n="scanBarcodeTitle">Barcode Scanner</span>
+          </div>
+
+          <!-- Camera Viewfinder Mockup -->
+          <div style="width:100%; height:180px; background:#111; border-radius:18px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+            <div style="width:180px; height:120px; border:2.5px solid var(--primary); border-radius:16px; position:relative;">
+              <div style="position:absolute; top:50%; left:0; right:0; height:2px; background:#EF4444; box-shadow:0 0 8px #EF4444; animation:scanLine 2s infinite ease-in-out;"></div>
+            </div>
+            <div style="position:absolute; bottom:8px; font-size:11px; color:white; background:rgba(0,0,0,0.6); padding:2px 8px; border-radius:10px;">Align barcode within frame</div>
+          </div>
+
+          <!-- Try Sample Barcodes -->
+          <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:8px;">TEST SAMPLE PRODUCT BARCODES:</div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+            <button class="btn-toggle" onclick="lookupBarcode('5449000000996')">🥤 Coca-Cola (E338, E150d)</button>
+            <button class="btn-toggle" onclick="lookupBarcode('8410757001090')">🧴 S'nonas Cream (E330)</button>
+            <button class="btn-toggle" onclick="lookupBarcode('3251490332080')">🍪 Gerblé (E322, E330)</button>
+          </div>
+
+          <div id="scannerProductResult" style="margin-top:10px;"></div>
+        </div>
+      </div>
+
+      <!-- Compare Screen Modal -->
+      <div class="modal-overlay" id="compareModal" onclick="closeModals(event)">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+          <div class="modal-handle"></div>
+          <div class="modal-title">
+            <span style="font-size:22px;">⚖️</span>
+            <span data-i18n="compareTitle">Compare Additives</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+            <div style="background:var(--bg); border:1px solid var(--divider); border-radius:14px; padding:10px; text-align:center;">
+              <div style="font-size:28px;">🍋</div>
+              <div style="font-weight:900; font-size:16px;">E330</div>
+              <div style="font-size:11.5px; color:var(--text-muted);">Citric Acid</div>
+              <div class="status-badge badge-safe" style="margin:6px auto 0; font-size:10.5px;">Safe</div>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--divider); border-radius:14px; padding:10px; text-align:center;">
+              <div style="font-size:28px;">🧪</div>
+              <div style="font-weight:900; font-size:16px;">E621</div>
+              <div style="font-size:11.5px; color:var(--text-muted);">Monosodium Glutamate</div>
+              <div class="status-badge badge-caution" style="margin:6px auto 0; font-size:10.5px;">Caution</div>
+            </div>
+          </div>
+
+          <div style="font-size:12px; line-height:1.5; color:var(--text-muted); background:var(--bg); border-radius:14px; padding:12px; margin-bottom:14px;">
+            <strong>Comparison Summary:</strong><br>
+            • <strong>E330</strong> is naturally derived from citrus fruits and recognized safe worldwide.<br>
+            • <strong>E621</strong> is an umami flavor enhancer evaluated with caution due to potential overexposure risks.
+          </div>
+
+          <button class="btn-action-filled" style="width:100%;" onclick="closeAllModals()">Close Comparison</button>
+        </div>
+      </div>
+
+      <!-- Report / Suggest Update Modal -->
+      <div class="modal-overlay" id="reportModal" onclick="closeModals(event)">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+          <div class="modal-handle"></div>
+          <div class="modal-title">
+            <span style="font-size:22px;">⚠️</span>
+            <span data-i18n="reportTitle">Suggest an Update</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">
+            Help us keep AddiScan accurate! Submit corrections or EFSA references below.
+          </p>
+
+          <input type="text" id="reportCodeInput" class="search-input" style="border:1px solid var(--divider); border-radius:12px; padding:8px 12px; width:100%; margin-bottom:10px;" value="E330" placeholder="Additive Code">
+          <textarea id="reportMessageInput" class="search-input" style="border:1px solid var(--divider); border-radius:12px; padding:8px 12px; width:100%; height:80px; margin-bottom:14px;" placeholder="Details or source link..."></textarea>
+
+          <button class="btn-action-filled" style="width:100%;" onclick="submitReport()">Submit Suggestion</button>
+        </div>
+      </div>
+
+      <!-- About Modal -->
+      <div class="modal-overlay" id="aboutModal" onclick="closeModals(event)">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+          <div class="modal-handle"></div>
+          <div style="text-align:center; margin-bottom:14px;">
+            <svg class="header-logo-svg" style="width:50px; height:50px; margin:0 auto 8px;" viewBox="0 0 100 100">
+              <path d="M15,50 Q20,5 65,10 Q50,55 15,50 Z" fill="#22C55E"/>
+              <line x1="20" y1="45" x2="55" y2="18" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+              <circle cx="55" cy="52" r="28" stroke="#0F8B7F" stroke-width="12" fill="none"/>
+              <line x1="35" y1="72" x2="12" y2="95" stroke="#0F8B7F" stroke-width="14" stroke-linecap="round"/>
+            </svg>
+            <h2 style="font-size:22px; font-weight:900; color:var(--primary);">AddiScan</h2>
+            <div style="font-size:12.5px; color:var(--text-muted); font-weight:700;">Eat Smart. Live Healthy.</div>
+            <div style="font-size:11px; color:var(--text-light); margin-top:2px;">Version 1.0.0 (Web Edition)</div>
+          </div>
+
+          <div style="background:var(--bg); border:1px solid var(--divider); border-radius:14px; padding:12px; margin-bottom:12px; font-size:12px; line-height:1.5;">
+            <strong>Data Sources:</strong><br>
+            Powered by <strong>Open Food Facts</strong> taxonomy & scientific re-evaluations from the <strong>European Food Safety Authority (EFSA)</strong>.
+          </div>
+
+          <div style="background:#FFF1F2; border:1px solid #FECDD3; border-radius:14px; padding:12px; margin-bottom:16px; font-size:11.5px; color:#9F1239; line-height:1.4;">
+            <strong>Medical Disclaimer:</strong><br>
+            Information for reference only, not medical advice. Consult a healthcare professional for dietary or allergy concerns.
+          </div>
+
+          <div style="text-align:center; font-size:13px; font-weight:800; color:var(--primary); margin-bottom:14px;">
+            Crafted by Azzedine
+          </div>
+
+          <button class="btn-action-filled" style="width:100%;" onclick="closeAllModals()">Close</button>
+        </div>
+      </div>
+
+      <!-- Toast Feedback -->
+      <div class="toast-msg" id="toastBox">Message</div>
+
+    </div>
+
+  </main>
+
+  <style>
+    @keyframes scanLine {
+      0% { top: 10px; }
+      50% { top: 110px; }
+      100% { top: 10px; }
+    }
+  </style>
+
+  <!-- Embedded Offline Database & Logic -->
+  <script>
+    // Offline Additives Dataset (Source: Open Food Facts & EFSA)
+    const ADDITIVES_DB = [
+      {
+        code: "E330",
+        e_number: "330",
+        name: "Citric acid",
+        name_fr: "Acide citrique",
+        name_ar: "حمض الليمون",
+        category: "Acidity Regulator / Antioxidant",
+        safety: "safe",
+        safety_label: "Generally Recognized as Safe",
+        safety_desc: "Widely used in food, with no major health concerns at normal levels.",
+        icon: "🍋",
+        thumbClass: "thumb-lemon",
+        vegan: true,
+        noAllergen: true,
+        natural: true,
+        overview: "Acidulant and pH regulator. Helps to maintain acidity, enhance flavour and act as a preservative.",
+        origin: "Naturally found in citrus fruits. Can also be produced synthetically via Aspergillus niger fermentation.",
+        foods: "Soft drinks, candies, jams, baked goods, dairy products, canned vegetables.",
+        regulatory: "Approved by EFSA, FDA and Codex Alimentarius. Generally recognized as safe at typical use levels."
+      },
+      {
+        code: "E621",
+        e_number: "621",
+        name: "Monosodium glutamate",
+        name_fr: "Glutamate monosodique",
+        name_ar: "غلوتامات أحادي الصوديوم",
+        category: "Flavour Enhancer",
+        safety: "caution",
+        safety_label: "Use with Caution",
+        safety_desc: "EFSA notes potential overexposure risks exceeding acceptable daily intake in sensitive individuals.",
+        icon: "🧪",
+        thumbClass: "thumb-flask",
+        vegan: true,
+        noAllergen: false,
+        natural: false,
+        overview: "Monosodium glutamate (MSG) is an umami flavor enhancer that balances and rounds savory perception.",
+        origin: "Produced via bacterial fermentation of sugar beet, sugar cane, or corn molasses.",
+        foods: "Savory snacks, instant noodles, canned soups, processed meats, seasoning mixes.",
+        regulatory: "Re-evaluated by EFSA in 2017 establishing a group ADI of 30 mg/kg bw per day."
+      },
+      {
+        code: "E150d",
+        e_number: "150d",
+        name: "Caramel colour (Sulphite ammonia)",
+        name_fr: "Caramel au sulfite d'ammonium",
+        name_ar: "كراميل كبريتي أمونيومي",
+        category: "Colour",
+        safety: "safe",
+        safety_label: "Generally Recognized as Safe",
+        safety_desc: "Evaluated by EFSA with no significant overexposure safety risk under standard usage levels.",
+        icon: "💧",
+        thumbClass: "thumb-droplet",
+        vegan: true,
+        noAllergen: true,
+        natural: false,
+        overview: "Dark water-soluble food colouring made by heat treatment of carbohydrates with sulphite and ammonium compounds.",
+        origin: "Derived from controlled carbohydrate heating with sulphites and ammonium compounds.",
+        foods: "Cola beverages, sauces, gravies, beer, baked goods, confectionery.",
+        regulatory: "Refined exposure assessment conducted by EFSA confirming safety within authorized limit ranges."
+      },
+      {
+        code: "E100",
+        e_number: "100",
+        name: "Curcumin",
+        name_fr: "Curcumine",
+        name_ar: "كركومين",
+        category: "Colour",
+        safety: "safe",
+        safety_label: "Generally Recognized as Safe",
+        safety_desc: "Natural bright yellow food coloring extracted from turmeric rhizomes with established safe ADI.",
+        icon: "🌿",
+        thumbClass: "thumb-curcumin",
+        vegan: true,
+        noAllergen: true,
+        natural: true,
+        overview: "Curcumin is a bright yellow chemical produced by plants of the Curcuma longa species used as natural food coloring.",
+        origin: "Extracted naturally from the rhizomes of the turmeric plant (Curcuma longa).",
+        foods: "Mustard, cheese, curry powders, margarine, baked goods, ice creams.",
+        regulatory: "Evaluated by EFSA with an established Acceptable Daily Intake of 3 mg/kg bw/day."
+      },
+      {
+        code: "E951",
+        e_number: "951",
+        name: "Aspartame",
+        name_fr: "Aspartame",
+        name_ar: "أسبرتام",
+        category: "Sweetener",
+        safety: "caution",
+        safety_label: "Use with Caution",
+        safety_desc: "Classified Group 2B by WHO/IARC (2023). Contains phenylalanine, unsafe for individuals with PKU.",
+        icon: "🧪",
+        thumbClass: "thumb-flask",
+        vegan: true,
+        noAllergen: false,
+        natural: false,
+        overview: "Artificial non-saccharide sweetener 200 times sweeter than sucrose, commonly used in low-calorie drinks.",
+        origin: "Synthesized from aspartic acid and phenylalanine.",
+        foods: "Diet sodas, sugar-free chewing gum, gelatin desserts, low-calorie yogurts.",
+        regulatory: "Evaluated by EFSA and JECFA; mandatory warning label required in the EU for phenylketonurics."
+      },
+      {
+        code: "E250",
+        e_number: "250",
+        name: "Sodium nitrite",
+        name_fr: "Nitrite de sodium",
+        name_ar: "نتريت الصوديوم",
+        category: "Preservative",
+        safety: "caution",
+        safety_label: "Use with Caution",
+        safety_desc: "EFSA flagged high overexposure risks and nitrosamine formation during high heat cooking.",
+        icon: "🧪",
+        thumbClass: "thumb-flask",
+        vegan: true,
+        noAllergen: true,
+        natural: false,
+        overview: "Inorganic salt used to prevent bacterial growth (especially Clostridium botulinum) and preserve red meat color.",
+        origin: "Manufactured synthetically through the reduction of sodium nitrate.",
+        foods: "Cured meats, bacon, sausages, ham, hot dogs.",
+        regulatory: "Strict limits imposed in the EU to minimize conversion to carcinogenic nitrosamines."
+      },
+      {
+        code: "E171",
+        e_number: "171",
+        name: "Titanium dioxide",
+        name_fr: "Oxyde de titane",
+        name_ar: "ثنائي أكسيد التيتانيوم",
+        category: "Colour",
+        safety: "caution",
+        safety_label: "Use with Caution",
+        safety_desc: "Concluded by EFSA to no longer be considered safe as a food additive due to genotoxicity concerns.",
+        icon: "⚪",
+        thumbClass: "thumb-droplet",
+        vegan: true,
+        noAllergen: true,
+        natural: false,
+        overview: "White pigment previously used for clouding and whitening in confectionery and sauces.",
+        origin: "Extracted from minerals like ilmenite and rutile.",
+        foods: "Chewing gum, pastries, white confectionery, cake icings.",
+        regulatory: "Banned as a food additive across the European Union as of 2022."
+      },
+      {
+        code: "E211",
+        e_number: "211",
+        name: "Sodium benzoate",
+        name_fr: "Benzoate de sodium",
+        name_ar: "بنزوات الصوديوم",
+        category: "Preservative",
+        safety: "caution",
+        safety_label: "Use with Caution",
+        safety_desc: "High overexposure risk noted by EFSA; can form traces of benzene in presence of Vitamin C.",
+        icon: "🧪",
+        thumbClass: "thumb-flask",
+        vegan: true,
+        noAllergen: true,
+        natural: false,
+        overview: "Widely used food preservative that inhibits yeast, bacteria and fungi in acidic foods.",
+        origin: "Synthesized through neutralization of benzoic acid with sodium hydroxide.",
+        foods: "Carbonated beverages, pickles, fruit juices, salad dressings.",
+        regulatory: "Subject to strict maximum limits by EFSA and FDA."
+      },
+      {
+        code: "E202",
+        e_number: "202",
+        name: "Potassium sorbate",
+        name_fr: "Sorbate de potassium",
+        name_ar: "سوربات البوتاسيوم",
+        category: "Preservative",
+        safety: "caution",
+        safety_label: "Use with Caution",
+        safety_desc: "Overexposure risk flagged for high consumers; safe within strict recommended limits.",
+        icon: "🧪",
+        thumbClass: "thumb-flask",
+        vegan: true,
+        noAllergen: true,
+        natural: false,
+        overview: "Inhibits mold and yeast growth to prolong food shelf life without altering flavor.",
+        origin: "Synthetic salt produced from sorbic acid and potassium hydroxide.",
+        foods: "Cheese, wine, dried fruits, baked goods, dips.",
+        regulatory: "Group ADI revised by EFSA in 2015 to 3 mg/kg bw/day."
+      },
+      {
+        code: "E102",
+        e_number: "102",
+        name: "Tartrazine",
+        name_fr: "Tartrazine",
+        name_ar: "تارترازين",
+        category: "Colour",
+        safety: "safe",
+        safety_label: "Generally Recognized as Safe",
+        safety_desc: "Permitted synthetic lemon yellow azo dye with established ADI of 10 mg/kg bw/day.",
+        icon: "💧",
+        thumbClass: "thumb-droplet",
+        vegan: true,
+        noAllergen: false,
+        natural: false,
+        overview: "Synthetic lemon yellow azo dye used for coloring foods, cosmetics and pharmaceuticals.",
+        origin: "Manufactured chemically from coal tar derivatives.",
+        foods: "Soft drinks, sports drinks, confectionery, cotton candy, flavored chips.",
+        regulatory: "Requires warning on hyperactivity in children in the EU."
+      }
+    ];
+
+    // Multilingual Translations dictionary
+    const I18N = {
+      en: {
+        appName: "AddiScan",
+        taglineHome: "Know what you eat",
+        heroTitle: "Scan or search<br>food additives",
+        heroSubtitle: "Get clear, reliable information in seconds!",
+        searchHint: "Search for an E-code... (e.g. E330, E621)",
+        popularSearches: "Popular Searches",
+        recentSearches: "Your Recent Searches",
+        seeAll: "See all",
+        detailsTitle: "Additive Details",
+        veganFriendly: "Vegan Friendly",
+        noMajorAllergen: "No Major Allergen",
+        naturalOrigin: "Natural Origin",
+        overviewRole: "Overview & Role in Food",
+        originSource: "Origin / Source",
+        commonFoods: "Common Foods Where It Appears",
+        regulatoryNotes: "Regulatory & Safety Notes",
+        compare: "Compare",
+        reportUpdate: "Report / Suggest Update",
+        historySavedTitle: "History & Saved",
+        historyTab: "History",
+        savedTab: "Saved",
+        filterHint: "Filter by code or name...",
+        didYouKnow: "Did you know?",
+        didYouKnowFact: "E330 is naturally found in citrus fruits and is one of the most common food additives.",
+        home: "Home",
+        about: "About",
+        generallyRecognizedAsSafe: "Generally Recognized as Safe",
+        useWithCaution: "Use with Caution",
+        notEvaluated: "Not Evaluated",
+        scanBarcodeTitle: "Barcode Scanner",
+        compareTitle: "Compare Additives",
+        reportTitle: "Suggest an Update",
+        safetyLevels: "Safety Levels Explained",
+        safetySafeDesc: "Evaluated by EFSA and food authorities with no adverse overexposure risks noted under typical food use.",
+        safetyCautionDesc: "Flagged with high overexposure risks, genotoxicity concerns (e.g. E171), or special health warnings.",
+        safetyNotEvalDesc: "Lacks conclusive recent EFSA re-evaluation in the Open Food Facts taxonomy."
+      },
+      fr: {
+        appName: "AddiScan",
+        taglineHome: "Sachez ce que vous mangez",
+        heroTitle: "Scannez ou cherchez<br>des additifs alimentaires",
+        heroSubtitle: "Obtenez des informations claires et fiables en quelques secondes !",
+        searchHint: "Rechercher un code E... (ex. E330, E621)",
+        popularSearches: "Recherches populaires",
+        recentSearches: "Vos recherches récentes",
+        seeAll: "Voir tout",
+        detailsTitle: "Détails de l'additif",
+        veganFriendly: "Végan",
+        noMajorAllergen: "Sans allergène majeur",
+        naturalOrigin: "Origine naturelle",
+        overviewRole: "Rôle dans l'alimentation",
+        originSource: "Origine / Source",
+        commonFoods: "Aliments courants",
+        regulatoryNotes: "Notes réglementaires & sécurité",
+        compare: "Comparer",
+        reportUpdate: "Suggérer une mise à jour",
+        historySavedTitle: "Historique & Favoris",
+        historyTab: "Historique",
+        savedTab: "Favoris",
+        filterHint: "Filtrer par code ou nom...",
+        didYouKnow: "Le saviez-vous ?",
+        didYouKnowFact: "Le E330 est naturellement présent dans les agrumes et constitue l'un des additifs les plus courants.",
+        home: "Accueil",
+        about: "À propos",
+        generallyRecognizedAsSafe: "Généralement reconnu comme sûr",
+        useWithCaution: "À consommer avec modération",
+        notEvaluated: "Non évalué",
+        scanBarcodeTitle: "Scanner de code-barres",
+        compareTitle: "Comparer des additifs",
+        reportTitle: "Suggérer une mise à jour",
+        safetyLevels: "Niveaux de sécurité",
+        safetySafeDesc: "Évalué sans risque notable dans les conditions normales d'utilisation.",
+        safetyCautionDesc: "Présente un risque de surexposition ou des réserves sanitaires signalées.",
+        safetyNotEvalDesc: "Données de réévaluation EFSA incomplètes ou non concluantes."
+      },
+      ar: {
+        appName: "أديسكان",
+        taglineHome: "اعرف ما تأكل",
+        heroTitle: "امسح أو ابحث عن<br>المضافات الغذائية",
+        heroSubtitle: "احصل على معلومات دقيقة وموثوقة في ثوانٍ!",
+        searchHint: "ابحث عن رمز E... (مثل E330, E621)",
+        popularSearches: "الأكثر بحثاً",
+        recentSearches: "عمليات البحث الأخيرة",
+        seeAll: "عرض الكل",
+        detailsTitle: "تفاصيل المضاف",
+        veganFriendly: "مناسب للنباتيين",
+        noMajorAllergen: "خالٍ من مسببات الحساسية",
+        naturalOrigin: "مصدر طبيعي",
+        overviewRole: "نظرة عامة ودوره في الغذاء",
+        originSource: "المصدر والأصل",
+        commonFoods: "أطعمة شائعة يتواجد فيها",
+        regulatoryNotes: "ملاحظات تنظيمية وصحية",
+        compare: "مقارنة",
+        reportUpdate: "اقتراح تعديل",
+        historySavedTitle: "السجل والمحفوظات",
+        historyTab: "السجل",
+        savedTab: "المحفوظات",
+        filterHint: "تصفية حسب الرمز أو الاسم...",
+        didYouKnow: "هل تعلم؟",
+        didYouKnowFact: "E330 (حمض الستريك) يتواجد طبيعياً في الحمضيات ويعد من أكثر المضافات انتشاراً.",
+        home: "الرئيسية",
+        about: "حول التطبيق",
+        generallyRecognizedAsSafe: "معترف به كآمن بشكل عام",
+        useWithCaution: "استخدم بحذر",
+        notEvaluated: "غير مقيّم",
+        scanBarcodeTitle: "ماسح الباركود",
+        compareTitle: "مقارنة المضافات",
+        reportTitle: "اقتراح تعديل",
+        safetyLevels: "مستويات الأمان المعتمدة",
+        safetySafeDesc: "تم تقييمه من الهيئات الغذائية بمستوى استهلاك يومي آمن دون أضرار مسجلة.",
+        safetyCautionDesc: "أشارت الدراسات إلى احتمال وجود مخاطر عند فرط الاستهلاك أو حساسية.",
+        safetyNotEvalDesc: "لا تتوفر دراسة تقييمية كاملة حديثة في قاعدة البيانات."
+      }
+    };
+
+    // App State
+    let currentLang = 'en';
+    let currentScreen = 'home';
+    let currentAdditive = ADDITIVES_DB[0]; // E330
+    let savedCodes = JSON.parse(localStorage.getItem('addiscan_saved') || '["E330", "E100"]');
+    let historyItems = JSON.parse(localStorage.getItem('addiscan_history') || JSON.stringify([
+      { code: "E330", time: "Today • 14:32" },
+      { code: "E621", time: "Yesterday • 19:20" },
+      { code: "E150d", time: "Nov 19 • 11:15" },
+      { code: "E100", time: "Nov 18 • 16:47" },
+      { code: "E951", time: "Nov 16 • 09:12" }
+    ]));
+    let currentHistorySegment = 0; // 0: History, 1: Saved
+    let currentStatusFilter = 'all'; // all, safe, caution
+
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      renderRecentList();
+      renderHistoryList();
+      updateClock();
+      setInterval(updateClock, 30000);
+    });
+
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const mins = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('statusBarTime').textContent = `${hours}:${mins}`;
+    }
+
+    // Screen Switching
+    function switchPhoneScreen(screenName, additiveCode = null, segment = null) {
+      document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.top-controls .btn-toggle').forEach(b => {
+        if (b.id.startsWith('btnTab')) b.classList.remove('active');
+      });
+
+      currentScreen = screenName;
+
+      if (screenName === 'home') {
+        document.getElementById('screenHome').classList.add('active');
+        document.getElementById('navHome').classList.add('active');
+        document.getElementById('btnTabHome').classList.add('active');
+      } else if (screenName === 'details') {
+        if (additiveCode) {
+          const item = ADDITIVES_DB.find(a => a.code.toUpperCase() === additiveCode.toUpperCase()) || ADDITIVES_DB[0];
+          populateAdditiveDetails(item);
+        }
+        document.getElementById('screenDetails').classList.add('active');
+        document.getElementById('btnTabDetails').classList.add('active');
+      } else if (screenName === 'history') {
+        document.getElementById('screenHistory').classList.add('active');
+        document.getElementById('btnTabHistory').classList.add('active');
+        if (segment === 1) {
+          setHistorySegment(1);
+          document.getElementById('navSaved').classList.add('active');
+        } else {
+          setHistorySegment(0);
+          document.getElementById('navHistory').classList.add('active');
+        }
+      }
+    }
+
+    // Populate Details Screen
+    function populateAdditiveDetails(item) {
+      currentAdditive = item;
+      document.getElementById('detailsCode').textContent = item.code;
+      document.getElementById('detailsName').textContent = getLocalizedName(item);
+      document.getElementById('detailsCategory').textContent = item.category;
+      document.getElementById('detailsOverview').textContent = item.overview;
+      document.getElementById('detailsOrigin').textContent = item.origin;
+      document.getElementById('detailsFoods').textContent = item.foods;
+      document.getElementById('detailsRegulatory').textContent = item.regulatory;
+
+      // Hero illustration
+      document.getElementById('detailsHeroImage').innerHTML = getHeroIllustrationSvg(item.code);
+
+      // Safety Banner
+      const banner = document.getElementById('detailsSafetyBanner');
+      const title = document.getElementById('detailsSafetyTitle');
+      const desc = document.getElementById('detailsSafetyDesc');
+
+      banner.className = `safety-banner ${item.safety === 'safe' ? 'safe-banner' : 'caution-banner'}`;
+      title.textContent = item.safety_label;
+      desc.textContent = item.safety_desc;
+
+      // Bookmark button state
+      updateBookmarkButton();
+
+      // Record to history
+      addToHistory(item.code);
+    }
+
+    function getHeroIllustrationSvg(code) {
+      if (code === 'E330') {
+        return `
+          <svg viewBox="0 0 140 120" width="130" height="110">
+            <ellipse cx="70" cy="100" rx="50" ry="12" fill="rgba(0,0,0,0.08)"/>
+            <!-- Whole Lemon (Right) -->
+            <path d="M60,40 Q130,20 125,75 Q115,105 70,95 Q40,65 60,40 Z" fill="url(#lemGrad)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+            <!-- Green Leaves -->
+            <path d="M60,40 Q45,10 70,5 Q80,28 60,40 Z" fill="#22C55E"/>
+            <path d="M50,42 Q30,25 45,15 Q60,30 50,42 Z" fill="#16A34A"/>
+            <!-- Cut Lemon Half (Front Left) -->
+            <circle cx="50" cy="72" r="38" fill="#FBC02D"/>
+            <circle cx="50" cy="72" r="34" fill="#FFFDE7"/>
+            <circle cx="50" cy="72" r="30" fill="#FFEB3B"/>
+            <line x1="50" y1="42" x2="50" y2="102" stroke="white" stroke-width="2.5"/>
+            <line x1="20" y1="72" x2="80" y2="72" stroke="white" stroke-width="2.5"/>
+            <line x1="28" y1="50" x2="72" y2="94" stroke="white" stroke-width="2.5"/>
+            <line x1="28" y1="94" x2="72" y2="50" stroke="white" stroke-width="2.5"/>
+            <circle cx="50" cy="72" r="5" fill="#FFFDE7"/>
+            <defs>
+              <radialGradient id="lemGrad" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#FFF176"/>
+                <stop offset="100%" stop-color="#FBC02D"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        `;
+      } else if (code === 'E150d') {
+        return `
+          <svg viewBox="0 0 140 120" width="130" height="110">
+            <ellipse cx="70" cy="100" rx="40" ry="10" fill="rgba(0,0,0,0.08)"/>
+            <path d="M70,15 C110,65 115,95 70,102 C25,95 30,65 70,15 Z" fill="url(#dropGrad)"/>
+            <path d="M55,50 Q48,70 60,85" stroke="rgba(255,255,255,0.7)" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <defs>
+              <radialGradient id="dropGrad" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#60A5FA"/>
+                <stop offset="50%" stop-color="#2563EB"/>
+                <stop offset="100%" stop-color="#1D4ED8"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        `;
+      } else {
+        return `
+          <svg viewBox="0 0 140 120" width="130" height="110">
+            <ellipse cx="70" cy="100" rx="45" ry="10" fill="rgba(0,0,0,0.08)"/>
+            <path d="M60,20 L60,45 L30,95 Q30,105 45,105 L95,105 Q110,105 110,95 L80,45 L80,20 Z" fill="none" stroke="#0F8B7F" stroke-width="5" stroke-linejoin="round"/>
+            <line x1="55" y1="20" x2="85" y2="20" stroke="#0F8B7F" stroke-width="5" stroke-linecap="round"/>
+            <path d="M42,75 Q70,72 98,75 L106,96 Q106,102 95,102 L45,102 Q34,102 34,96 Z" fill="url(#liquidGrad)"/>
+            <circle cx="62" cy="85" r="4" fill="rgba(255,255,255,0.7)"/>
+            <circle cx="78" cy="90" r="3" fill="rgba(255,255,255,0.6)"/>
+            <defs>
+              <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#EF4444"/>
+                <stop offset="100%" stop-color="#F97316"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        `;
+      }
+    }
+
+    function openAdditiveDetails(code) {
+      switchPhoneScreen('details', code);
+    }
+
+    // Search functionality
+    function handleHomeSearch(val) {
+      const q = val.trim().toLowerCase();
+      const drop = document.getElementById('homeSearchResults');
+      const feed = document.getElementById('homeDefaultContent');
+
+      if (!q) {
+        drop.style.display = 'none';
+        feed.style.display = 'block';
+        return;
+      }
+
+      feed.style.display = 'none';
+      drop.style.display = 'block';
+
+      const results = ADDITIVES_DB.filter(a => 
+        a.code.toLowerCase().includes(q) ||
+        a.e_number.toLowerCase().includes(q) ||
+        a.name.toLowerCase().includes(q) ||
+        (a.name_fr && a.name_fr.toLowerCase().includes(q)) ||
+        (a.name_ar && a.name_ar.toLowerCase().includes(q))
+      );
+
+      if (results.length === 0) {
+        drop.innerHTML = `
+          <div style="text-align:center; padding:30px 10px; color:var(--text-muted);">
+            <div style="font-size:36px; margin-bottom:8px;">🔍</div>
+            <div style="font-weight:700;">No additives found for "${val}"</div>
+          </div>
+        `;
+        return;
+      }
+
+      drop.innerHTML = results.map(item => `
+        <div class="additive-card" onclick="openAdditiveDetails('${item.code}')">
+          <div class="additive-thumb ${item.thumbClass}">${item.icon}</div>
+          <div class="additive-meta">
+            <div class="meta-code">${item.code}</div>
+            <div class="meta-name">${getLocalizedName(item)}</div>
+          </div>
+          <div class="status-badge ${item.safety === 'safe' ? 'badge-safe' : 'badge-caution'}">
+            ${item.safety === 'safe' ? 'Generally Safe' : 'Use with Caution'}
+          </div>
+          <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      `).join('');
+    }
+
+    // Render Recent Searches List
+    function renderRecentList() {
+      const list = document.getElementById('homeRecentList');
+      const items = [
+        { code: "E330", time: "Today • 14:32" },
+        { code: "E621", time: "Yesterday • 19:20" },
+        { code: "E150d", time: "Nov 19 • 11:15" }
+      ];
+
+      list.innerHTML = items.map(entry => {
+        const item = ADDITIVES_DB.find(a => a.code === entry.code) || ADDITIVES_DB[0];
+        return `
+          <div class="additive-card" onclick="openAdditiveDetails('${item.code}')">
+            <div class="additive-thumb ${item.thumbClass}">${item.icon}</div>
+            <div class="additive-meta">
+              <div class="meta-code">${item.code}</div>
+              <div class="meta-name">${getLocalizedName(item)}</div>
+            </div>
+            <div class="status-badge ${item.safety === 'safe' ? 'badge-safe' : 'badge-caution'}">
+              ${item.safety === 'safe' ? 'Generally Safe' : 'Use with Caution'}
+            </div>
+            <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // History & Saved Tab Logic
+    function setHistorySegment(index) {
+      currentHistorySegment = index;
+      document.getElementById('segHistoryBtn').className = `segment-btn ${index === 0 ? 'active' : ''}`;
+      document.getElementById('segSavedBtn').className = `segment-btn ${index === 1 ? 'active' : ''}`;
+      renderHistoryList();
+    }
+
+    function renderHistoryList(filterText = '') {
+      const list = document.getElementById('historyItemList');
+      const q = filterText.trim().toLowerCase();
+
+      let sourceList;
+      if (currentHistorySegment === 0) {
+        sourceList = historyItems;
+      } else {
+        sourceList = savedCodes.map(code => ({ code, time: 'Saved' }));
+      }
+
+      let filtered = sourceList.map(entry => {
+        const item = ADDITIVES_DB.find(a => a.code === entry.code);
+        return { item, time: entry.time };
+      }).filter(entry => entry.item !== undefined);
+
+      if (currentStatusFilter !== 'all') {
+        filtered = filtered.filter(e => e.item.safety === currentStatusFilter);
+      }
+
+      if (q) {
+        filtered = filtered.filter(e => 
+          e.item.code.toLowerCase().includes(q) ||
+          e.item.name.toLowerCase().includes(q) ||
+          (e.item.name_fr && e.item.name_fr.toLowerCase().includes(q)) ||
+          (e.item.name_ar && e.item.name_ar.toLowerCase().includes(q))
+        );
+      }
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div style="text-align:center; padding:36px 12px; color:var(--text-muted);">
+            <div style="font-size:36px; margin-bottom:8px;">${currentHistorySegment === 0 ? '🕒' : '🔖'}</div>
+            <div style="font-weight:700;">No items found</div>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = filtered.map(e => `
+        <div class="additive-card" onclick="openAdditiveDetails('${e.item.code}')">
+          <div class="additive-thumb ${e.item.thumbClass}">${e.item.icon}</div>
+          <div class="additive-meta">
+            <div class="meta-code">${e.item.code}</div>
+            <div class="meta-name">${getLocalizedName(e.item)}</div>
+            <div class="meta-time">${e.time}</div>
+          </div>
+          <div class="status-badge ${e.item.safety === 'safe' ? 'badge-safe' : 'badge-caution'}">
+            ${e.item.safety === 'safe' ? 'Safe' : 'Caution'}
+          </div>
+          <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      `).join('');
+    }
+
+    function filterHistoryList(val) {
+      renderHistoryList(val);
+    }
+
+    function cycleStatusFilter() {
+      if (currentStatusFilter === 'all') currentStatusFilter = 'safe';
+      else if (currentStatusFilter === 'safe') currentStatusFilter = 'caution';
+      else currentStatusFilter = 'all';
+
+      const badge = document.getElementById('currentStatusFilterBadge');
+      badge.textContent = currentStatusFilter.toUpperCase();
+      renderHistoryList(document.getElementById('historyFilterInput').value);
+    }
+
+    // Bookmark Handling
+    function updateBookmarkButton() {
+      const btn = document.getElementById('detailsBookmarkBtn');
+      const isSaved = savedCodes.includes(currentAdditive.code);
+      btn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="${isSaved ? 'var(--primary)' : 'none'}" stroke="${isSaved ? 'var(--primary)' : 'currentColor'}" stroke-width="2">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+      `;
+    }
+
+    function toggleCurrentBookmark() {
+      const idx = savedCodes.indexOf(currentAdditive.code);
+      let msg = '';
+      if (idx >= 0) {
+        savedCodes.splice(idx, 1);
+        msg = `Removed ${currentAdditive.code} from saved`;
+      } else {
+        savedCodes.unshift(currentAdditive.code);
+        msg = `Saved ${currentAdditive.code} to bookmarks`;
+      }
+      localStorage.setItem('addiscan_saved', JSON.stringify(savedCodes));
+      updateBookmarkButton();
+      showToast(msg);
+    }
+
+    function addToHistory(code) {
+      historyItems = historyItems.filter(h => h.code !== code);
+      historyItems.unshift({ code, time: 'Today • Just now' });
+      if (historyItems.length > 30) historyItems.pop();
+      localStorage.setItem('addiscan_history', JSON.stringify(historyItems));
+    }
+
+    function shareCurrentAdditive() {
+      const text = `${currentAdditive.code} - ${getLocalizedName(currentAdditive)}\nCategory: ${currentAdditive.category}\nStatus: ${currentAdditive.safety_label}\n\nAddiScan • Crafted by Azzedine`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text);
+        showToast('Additive info copied to clipboard!');
+      } else {
+        alert(text);
+      }
+    }
+
+    // Accordions
+    function toggleAccordion(element) {
+      element.classList.toggle('open');
+    }
+
+    // Modals
+    function openSafetyModal() {
+      document.getElementById('safetyModal').classList.add('open');
+    }
+
+    function openScannerModal() {
+      document.getElementById('scannerModal').classList.add('open');
+    }
+
+    function openCompareModal() {
+      document.getElementById('compareModal').classList.add('open');
+    }
+
+    function openReportModal() {
+      document.getElementById('reportCodeInput').value = currentAdditive.code;
+      document.getElementById('reportModal').classList.add('open');
+    }
+
+    function openAboutModal() {
+      document.getElementById('aboutModal').classList.add('open');
+    }
+
+    function openSettingsModal() {
+      openAboutModal();
+    }
+
+    function closeModals(e) {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeAllModals();
+      }
+    }
+
+    function closeAllModals() {
+      document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+    }
+
+    function submitReport() {
+      closeAllModals();
+      showToast('Thank you! Your report has been submitted.');
+    }
+
+    // Open Food Facts Live Barcode Query
+    async function lookupBarcode(barcode) {
+      const resBox = document.getElementById('scannerProductResult');
+      resBox.innerHTML = '<div style="text-align:center; padding:10px;"><span style="color:var(--primary); font-weight:700;">Querying Open Food Facts...</span></div>';
+
+      try {
+        const resp = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
+        const data = await resp.json();
+
+        if (data.status === 1 && data.product) {
+          const p = data.product;
+          const tags = (p.additives_tags || []).map(t => t.replace('en:', '').toUpperCase());
+          resBox.innerHTML = `
+            <div style="background:var(--bg); border:1px solid var(--divider); border-radius:14px; padding:12px;">
+              <div style="font-weight:900; font-size:14px; color:var(--text-main);">${p.product_name || 'Product'}</div>
+              <div style="font-size:12px; color:var(--text-muted);">${p.brands || 'Open Food Facts Item'}</div>
+              <div style="margin-top:10px; font-size:12px; font-weight:800;">Detected Additives:</div>
+              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+                ${tags.length > 0 ? tags.map(code => `
+                  <button class="btn-toggle" style="padding:4px 8px; font-size:11px;" onclick="closeAllModals(); openAdditiveDetails('${code}')">
+                    ${code} →
+                  </button>
+                `).join('') : '<span style="font-size:11.5px; color:var(--safe-green-dark);">No additives detected</span>'}
+              </div>
+            </div>
+          `;
+        } else {
+          resBox.innerHTML = '<div style="color:red; font-size:12px; text-align:center;">Product not found in Open Food Facts.</div>';
+        }
+      } catch (err) {
+        resBox.innerHTML = '<div style="color:red; font-size:12px; text-align:center;">Network error querying Open Food Facts.</div>';
+      }
+    }
+
+    // Toast
+    function showToast(text) {
+      const toast = document.getElementById('toastBox');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    // Language
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+      const dict = I18N[lang] || I18N.en;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+
+      renderRecentList();
+      renderHistoryList();
+      if (currentAdditive) populateAdditiveDetails(currentAdditive);
+    }
+
+    function getLocalizedName(item) {
+      if (currentLang === 'fr' && item.name_fr) return item.name_fr;
+      if (currentLang === 'ar' && item.name_ar) return item.name_ar;
+      return item.name;
+    }
+
+    // Theme Mode
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('themeToggleBtn').textContent = '🌙 Dark Mode';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggleBtn').textContent = '☀️ Light Mode';
+      }
+    }
+
+    function viewAllCatalog() {
+      document.getElementById('homeSearchInput').value = 'E';
+      handleHomeSearch('E');
+    }
+  </script>
+
+</body>
+</html>
