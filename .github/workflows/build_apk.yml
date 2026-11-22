@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build AddiScan APK
 
 on:
   push:
@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -21,6 +24,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Ensure Gradle Wrapper Exists
+        run: |
+          cd android
+          if [ ! -f "gradlew" ]; then
+            gradle wrapper --gradle-version 8.9 --distribution-type all
+          fi
+          chmod +x gradlew
 
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
@@ -38,8 +49,42 @@ jobs:
       - name: Build Release APK
         run: flutter build apk --release
 
+      - name: Prepare APK for Release
+        run: |
+          cp build/app/outputs/flutter-apk/app-release.apk AddiScan-Release.apk
+          ls -lh AddiScan-Release.apk
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: AddiScan-Release-APK
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: AddiScan-Release.apk
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.0.0
+          name: "AddiScan v1.0.0 — Release APK"
+          body: |
+            ## 📱 AddiScan v1.0.0 — Android APK Release
+
+            Welcome to the official release of **AddiScan**!
+
+            ### ✨ Key Features:
+            * **726 Food Additives Database:** Complete offline taxonomy from Open Food Facts & EFSA.
+            * **Safety Indicators:** Clear badges for Safe, Caution, and Not Evaluated.
+            * **Instant Search & Filters:** Look up any E-code or name in Arabic, French, or English.
+            * **Barcode Scanner:** Live barcode lookup of commercial food items.
+            * **Dietary Flags:** Vegan and Natural origin markers.
+            * **Trilingual:** Arabic (RTL), French, and English.
+            * **Crafted by Azzedine.**
+
+            ### 📥 Download & Installation:
+            Download **`AddiScan-Release.apk`** below directly to your Android device, tap to install, and enjoy!
+          files: |
+            AddiScan-Release.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
