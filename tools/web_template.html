@@ -1,9 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>AddiScan — Full Food Additives Directory (726 E-Codes) | Crafted by Azzedine</title>
+    <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0F8B7F">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="assets/icons/app_icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -641,7 +647,8 @@
       <button class="btn-action" id="btnLangFr" onclick="setLang('fr')">🇫🇷 Français</button>
       <button class="btn-action" id="btnLangAr" onclick="setLang('ar')">🇲🇦 العربية (RTL)</button>
 
-      <!-- Theme Mode -->
+              <button class="btn-action" id="btnInstallApp" style="background:#0F8B7F; color:white; border-color:#0F8B7F;" onclick="triggerPwaInstall()">📲 تثبيت التطبيق</button>
+        <!-- Theme Mode -->
       <button class="btn-action" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </div>
   </header>
@@ -1181,6 +1188,37 @@
       } else {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.getElementById('themeBtn').textContent = '☀️ Light Mode';
+      }
+    }
+      // PWA Service Worker & Install Prompt
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const btn = document.getElementById('btnInstallApp');
+      if (btn) btn.style.display = 'inline-flex';
+    });
+
+    function triggerPwaInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((res) => {
+          if (res.outcome === 'accepted') {
+            const btn = document.getElementById('btnInstallApp');
+            if (btn) btn.style.display = 'none';
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        alert(currentLang === 'ar' 
+          ? 'لتثبيت التطبيق مباشرة على هاتفك:\n1. افتح الموقع في متصفح Chrome أو متصفح الهاتف\n2. اضغط على خيارات القائمة (⋮) أعلى المتصفح\n3. اختر "تثبيت التطبيق" أو "Add to Home screen"'
+          : 'To install on your phone:\n1. Open in Chrome on Android\n2. Tap the menu (⋮)\n3. Select "Install app" or "Add to Home screen"');
       }
     }
   </script>

@@ -1,0 +1,19 @@
+{
+  "name": "AddiScan - Know What You Eat",
+  "short_name": "AddiScan",
+  "description": "Complete Food Additives Directory with all 726 E-codes, safety levels, and dietary information.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0F8B7F",
+  "theme_color": "#0F8B7F",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "assets/icons/app_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
